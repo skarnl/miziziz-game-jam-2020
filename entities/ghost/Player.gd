@@ -22,6 +22,9 @@ func _process(delta):
 
 
 func spawn():
+	yield(get_tree().create_timer(0.3), 'timeout')
+	
+	$AnimationPlayer.play('spawn')
 	Audioplayer.play('spawn')
 	
 func possess_start(targetPosition):

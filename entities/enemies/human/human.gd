@@ -25,6 +25,8 @@ func _on_Human_input_event(viewport, event, shape_idx):
 func set_possessed(new_value):
 	possessed = new_value
 	
+	$AnimationPlayer.play('possessed')
+	
 	set_process(possessed)
 
 func _process(delta):
