@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/snake-spritesheet.png-e6f9c22ffe5b1644687ca3d001686617.stex"
+path="res://.import/start-button.png-9509c58c9ff97bd95689de56b104357e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/snake-spritesheet.png"
-dest_files=[ "res://.import/snake-spritesheet.png-e6f9c22ffe5b1644687ca3d001686617.stex" ]
+source_file="res://assets/images/_deprecated/start-button.png"
+dest_files=[ "res://.import/start-button.png-9509c58c9ff97bd95689de56b104357e.stex" ]
 
 [params]
 
