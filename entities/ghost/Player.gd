@@ -1,7 +1,7 @@
-extends Node2D
+extends KinematicBody2D
 
 var velocity: Vector2 = Vector2.ZERO
-var MAX_SPEED = 3
+var MAX_SPEED = 90
 	
 func _process(delta):
 	var input_vector = Vector2.ZERO
@@ -15,14 +15,15 @@ func _process(delta):
 	else:
 		velocity = Vector2.ZERO
 	
-	position.x = clamp(position.x + velocity.x, 0, 512)
-	position.y = clamp(position.y + velocity.y, 0, 300)
+	move_and_slide(velocity)
 
-
-func spawn():
-	pass
 	
-func possess_start():
+func possess_start(targetPosition):
+	$Tween.interpolate_property(self, 'position', position, targetPosition, 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$Tween.start()
+	
+	yield($Tween, 'tween_completed')
+	
 	hide()
 
 func possess_end():

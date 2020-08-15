@@ -7,9 +7,12 @@
 radius = 6.5203
 height = 5.28917
 
-[node name="Human" type="Area2D" groups=[
+[node name="Human" type="KinematicBody2D" groups=[
 "enemies",
 ]]
+input_pickable = true
+collision_layer = 2
+collision_mask = 30
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

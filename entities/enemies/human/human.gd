@@ -1,10 +1,10 @@
-extends Area2D
+extends KinematicBody2D
 
 signal clicked
 
 var possessed = false setget set_possessed
 var velocity: Vector2 = Vector2.ZERO
-var MAX_SPEED = 3
+var MAX_SPEED = 70
 
 func _ready():
 	set_process(false)
@@ -18,6 +18,7 @@ func move(towards:Vector2):
 	position += towards
 
 func _on_Human_input_event(viewport, event, shape_idx):
+	
 	if event is InputEventMouseButton:
 		emit_signal('clicked')
 
@@ -38,5 +39,4 @@ func _process(delta):
 	else:
 		velocity = Vector2.ZERO
 	
-	position.x = clamp(position.x + velocity.x, 0, 512)
-	position.y = clamp(position.y + velocity.y, 0, 300)
+	move_and_slide(velocity)
