@@ -24,6 +24,7 @@ config/icon="res://assets/images/_deprecated/icon.png"
 SceneLoader="*res://global/scene_loader.gd"
 Game="*res://global/game.gd"
 BackgroundMusic="*res://global/background-music.tscn"
+Audioplayer="*res://global/audioplayer.tscn"
 
 [display]
 

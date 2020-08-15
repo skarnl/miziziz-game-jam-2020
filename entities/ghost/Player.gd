@@ -3,6 +3,9 @@ extends KinematicBody2D
 var velocity: Vector2 = Vector2.ZERO
 var MAX_SPEED = 90
 	
+func _ready():
+	spawn()
+	
 func _process(delta):
 	var input_vector = Vector2.ZERO
 	
@@ -17,14 +20,20 @@ func _process(delta):
 	
 	move_and_slide(velocity)
 
+
+func spawn():
+	Audioplayer.play('spawn')
 	
 func possess_start(targetPosition):
 	$Tween.interpolate_property(self, 'position', position, targetPosition, 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
+	
+	Audioplayer.play('possess')
 	
 	yield($Tween, 'tween_completed')
 	
 	hide()
 
 func possess_end():
+	Audioplayer.play('possess')
 	show()
