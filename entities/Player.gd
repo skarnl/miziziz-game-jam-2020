@@ -14,3 +14,6 @@ func _unhandled_input(event):
 			position.y += 10
 		elif event.is_action_pressed("ui_up"):
 			position.y -= 10
+		
+		$AudioStreamPlayer.play();
+	
