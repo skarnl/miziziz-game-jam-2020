@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
+[ext_resource path="res://entities/enemies/human/human.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 6.5203
+height = 5.28917
+
+[node name="Human" type="Area2D" groups=[
+"enemies",
+]]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.891899, 0.297302 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 510.899, 153.318, 15.4074, 15.6708 )
+
+[node name="WeaponSprite" type="Sprite" parent="."]
+position = Vector2( 7.20278, -0.297302 )
+rotation = -0.454721
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 544.851, 34.6967, 15.4074, 16.5926 )
+
+[node name="Timer" type="Timer" parent="."]
+[connection signal="input_event" from="." to="." method="_on_Human_input_event"]
