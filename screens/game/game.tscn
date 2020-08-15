@@ -32,13 +32,27 @@ tile_data = PoolIntArray( 983048, 0, 0, 983059, 0, 5 )
 position = Vector2( 44.9807, 126.749 )
 
 [node name="Human" parent="." instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 245.139, 119.716 )
 
 [node name="Human2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 190.795, 231.799 )
 
 [node name="Human3" parent="." instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 347.457, 92.1197 )
 
 [node name="Human4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 292.264, 248.781 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 168.549
+margin_top = 125.244
+margin_right = 359.549
+margin_bottom = 173.244
+text = "Move with WASD
+Possess by clicking on enemy
+Exit possess with Q"
+__meta__ = {
+"_edit_use_anchors_": false
+}
