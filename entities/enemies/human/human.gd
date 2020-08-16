@@ -35,8 +35,10 @@ func set_look_direction():
 
 
 func set_player_detection():
-	$PlayerInteractionArea2D.connect('body_entered', self, '_on_Player_nearby')
-	$PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
+	$Rotation/PlayerInteractionArea2D.connect('body_entered', self, '_on_Player_nearby')
+	$Rotation/PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
+	
+	$Rotation/PlayerDetectionArea2D.connect('body_entered', self, '_on_Player_detected')
 	
 	
 func _on_Player_nearby(body):
@@ -54,6 +56,11 @@ func _on_Player_away(body):
 		player_nearby = false
 		set_process_unhandled_input(false)
 	
+
+func _on_Player_detected(body):
+	if body.is_in_group('player'):
+		$AlertAnimationPlayer.play('alert')
+
 
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
@@ -75,10 +82,13 @@ func set_possessed(new_value):
 	
 	current_state = STATES.POSSESSED if possessed else STATES.NORMAL
 	
-	$PlayerInteractionArea2D/CollisionShape2D.disabled = possessed
+	$Rotation/PlayerInteractionArea2D/CollisionShape2D.disabled = possessed
 	
 	if possessed:
 		$hint.hide()
+		$Rotation/VisionCone.hide()
+	else:
+		$Rotation/VisionCone.show()
 
 func _process(delta):
 	var input_vector = Vector2.ZERO
