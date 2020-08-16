@@ -14,8 +14,11 @@ var look_directions = {
 	DIRECTIONS.up: 270,
 }
 var player_nearby = false
-
 export(DIRECTIONS) var current_look_direction =  DIRECTIONS.right
+
+enum STATES { POSSESSED, NORMAL, ALERTED, DEAD }
+var current_state = STATES.NORMAL
+
 
 func _ready():
 	$hint.hide()
@@ -56,7 +59,7 @@ func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
 		if event.is_action_pressed('attack'):
 			emit_signal('hit')
-		elif event.is_action_pressed('possess'):
+		elif event.is_action_pressed('possess') and not possessed:
 			emit_signal('possessed')
 
 
@@ -66,10 +69,16 @@ func move(towards:Vector2):
 
 func set_possessed(new_value):
 	possessed = new_value
-	
 	$AnimationPlayer.play('possessed')
 	
 	set_process(possessed)
+	
+	current_state = STATES.POSSESSED if possessed else STATES.NORMAL
+	
+	$PlayerInteractionArea2D/CollisionShape2D.disabled = possessed
+	
+	if possessed:
+		$hint.hide()
 
 func _process(delta):
 	var input_vector = Vector2.ZERO
