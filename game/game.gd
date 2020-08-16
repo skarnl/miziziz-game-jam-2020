@@ -37,5 +37,7 @@ func start_possessing(enemy):
 func stop_possessing():
 	possessed = false
 	possessedEnemy.possessed = false
+	ghost.position = possessedEnemy.position
 	possessedEnemy = null
 	ghost.possess_end()
+	

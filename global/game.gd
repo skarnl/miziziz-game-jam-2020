@@ -5,7 +5,7 @@ extends Node
 
 var Screens = {
 	MAIN_MENU = 'res://screens/main_menu.tscn',
-	GAME = 'res://screens/game/game.tscn',
+	GAME = 'res://game/game.tscn',
 }
 
 
