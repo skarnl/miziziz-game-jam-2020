@@ -14,7 +14,7 @@ func _process(delta):
 	input_vector = input_vector.normalized()
 		
 	if input_vector != Vector2.ZERO:
-		velocity = input_vector * MAX_SPEED		
+		velocity = input_vector * MAX_SPEED
 	else:
 		velocity = Vector2.ZERO
 	

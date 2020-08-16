@@ -8,14 +8,6 @@ func _ready():
 	show()
 
 
-func _on_Button_mouse_entered():
-	$Button/Sprite.play()
-
-
-func _on_Button_mouse_exited():
-	$Button/Sprite.stop()
-
-
 func _on_Button_pressed():
 	Game.start_game()
 	
