@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Door_Wrong_Or_No_Door_Key_N.wav-4918913cb37557b52d84c3708cf69a8b.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/Door_Wrong_Or_No_Door_Key_N.wav"
+dest_files=[ "res://.import/Door_Wrong_Or_No_Door_Key_N.wav-4918913cb37557b52d84c3708cf69a8b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

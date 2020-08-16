@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Human_Alarming_N.wav-1a37a0efc7bd99cf907bbeb32087a8b1.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/Human_Alarming_N.wav"
+dest_files=[ "res://.import/Human_Alarming_N.wav-1a37a0efc7bd99cf907bbeb32087a8b1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

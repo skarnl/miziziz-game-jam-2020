@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Human_Gaaasp_N.wav-8933c9e4c500f2507d9e42804e473f04.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/Human_Gaaasp_N.wav"
+dest_files=[ "res://.import/Human_Gaaasp_N.wav-8933c9e4c500f2507d9e42804e473f04.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
