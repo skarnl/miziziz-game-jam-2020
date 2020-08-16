@@ -9,25 +9,33 @@ func _ready():
 	var enemies = get_tree().get_nodes_in_group('enemies')
 		
 	for enemy in enemies:
-		enemy.connect('clicked', self, '_on_Enemy_clicked', [enemy])
+		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
+		enemy.connect('hit', self, '_on_Enemy_hit', [enemy])
 		
-func _on_Enemy_clicked(enemy):
-	# TODO move ghost into target
+		
+func _on_Enemy_possessed(enemy):
+	start_possessing(enemy)
 	
-	print("enemy clicked")
 	
+func _on_Enemy_hit(enemy):
+	pass
+	
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.is_action_pressed('exit_possess') and possessed:
+			stop_possessing()
+
+				
+func start_possessing(enemy):
 	ghost.possess_start(enemy.position)
-	
-	# TODO check if there is already someone possessed
-	# TODO this isn't possible, you can only possess when you are ghost
-	
 	possessedEnemy = enemy
 	enemy.possessed = true
 	possessed = true
 
-func _unhandled_input(event):
-	if event is InputEventKey and event.is_action_pressed('exit_possess') and possessed:
-		possessed = false
-		possessedEnemy.possessed = false
-		possessedEnemy = null
-		ghost.possess_end()
+
+func stop_possessing():
+	possessed = false
+	possessedEnemy.possessed = false
+	possessedEnemy = null
+	ghost.possess_end()

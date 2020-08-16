@@ -75,13 +75,14 @@ attack={
 
 [layer_names]
 
-2d_physics/layer_1="player"
+2d_physics/layer_1="walls"
 2d_physics/layer_2="enemies"
-2d_physics/layer_3="walls"
+2d_physics/layer_3="player"
 2d_physics/layer_4="doors"
 2d_physics/layer_5="props"
 
 [rendering]
 
 quality/2d/use_pixel_snap=true
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"
