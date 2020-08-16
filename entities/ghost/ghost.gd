@@ -38,5 +38,5 @@ func possess_start(targetPosition):
 	hide()
 
 func possess_end():
-	Audioplayer.play('possess')
+	Audioplayer.play('exit_possess')
 	show()
