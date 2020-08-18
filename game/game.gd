@@ -2,6 +2,8 @@ extends Node2D
 
 var possessed = false
 
+var explosionScene = preload('res://entities/world/explosion.tscn')
+
 enum { GHOST, POSSESSED, AIMING }
 var current_state = GHOST
 
@@ -13,8 +15,7 @@ func _ready():
 		
 	for enemy in enemies:
 		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
-		enemy.connect('hit', self, '_on_Enemy_hit', [enemy])
-		enemy.connect('hit_player', self, '_on_Player_hit')
+		enemy.connect('died', self, '_on_Enemy_died', [enemy])
 		
 		
 func change_state_to(new_state):
@@ -40,8 +41,10 @@ func _on_Enemy_possessed(enemy):
 	start_possessing(enemy)
 	
 	
-func _on_Enemy_hit(enemy):
-	pass
+func _on_Enemy_died(enemy):
+	var explosion = explosionScene.instance()
+	explosion.position = enemy.position
+	$explosions_instances.add_child(explosion)
 	
 func _on_Player_hit():
 	game_over()

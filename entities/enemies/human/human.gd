@@ -1,8 +1,7 @@
 extends RigidBody2D
 
 signal possessed
-signal hit
-signal hit_player
+signal died
 
 var possessed = false setget set_possessed
 var velocity: Vector2 = Vector2.ZERO
@@ -26,6 +25,23 @@ func _ready():
 
 	var allPlayers = get_tree().get_nodes_in_group('player')
 	playerRef = allPlayers.front()
+	
+	connect('body_entered', self, '_on_body_entered')
+
+
+func _on_body_entered(otherBody):
+	print("_on_body_entered")
+	
+	if otherBody.is_in_group('enemies'):
+		otherBody.explode()
+		explode()
+
+
+func explode():
+	emit_signal('died')
+	
+	queue_free()
+
 
 func change_state_to(next_state):
 	match(current_state):
@@ -99,10 +115,16 @@ func set_possessed(new_value):
 	
 	if not possessed:
 		set_mode(RigidBody2D.MODE_RIGID)
+		
+		yield(get_tree(), 'idle_frame')
+		
+		var torque = 100 if previous_input.x > 0 else -100
+		apply_torque_impulse(torque)
+		
 		apply_impulse(Vector2.ZERO, previous_input * 10)
 	else:
 		set_mode(RigidBody2D.MODE_CHARACTER)
-	
+		
 	current_state = POSSESSED if possessed else NORMAL
 	
 	if possessed:
@@ -113,6 +135,10 @@ var previous_input
 
 func _integrate_forces(state):
 	if current_state == POSSESSED:
+		
+		var xform = state.get_transform().rotated(0)
+		state.set_transform(xform)
+		
 		var input_vector = Vector2.ZERO
 		
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
