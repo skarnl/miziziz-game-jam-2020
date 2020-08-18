@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bounce7.wav-f9dd5badace67fbe1281a5d2641bb945.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/bounce7.wav"
+dest_files=[ "res://.import/bounce7.wav-f9dd5badace67fbe1281a5d2641bb945.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
