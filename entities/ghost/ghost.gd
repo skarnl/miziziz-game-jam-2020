@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 var velocity: Vector2 = Vector2.ZERO
-var MAX_SPEED = 90
+var MAX_SPEED = 110
+var possessed = false
 	
 func _ready():
 	spawn()

@@ -6,7 +6,7 @@ signal hit_player
 
 var possessed = false setget set_possessed
 var velocity: Vector2 = Vector2.ZERO
-var MAX_SPEED = 70
+var MAX_SPEED = 110
 enum DIRECTIONS { right, down, left, up }
 
 var player_nearby = false
@@ -119,9 +119,9 @@ func _integrate_forces(state):
 		input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 		input_vector = input_vector.normalized()
 		
-		previous_input = input_vector
 			
 		if input_vector != Vector2.ZERO:
+			previous_input = input_vector
 			velocity = input_vector * MAX_SPEED		
 		else:
 			velocity = Vector2.ZERO
