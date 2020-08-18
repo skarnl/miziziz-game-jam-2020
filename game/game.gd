@@ -11,6 +11,7 @@ func _ready():
 	for enemy in enemies:
 		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
 		enemy.connect('hit', self, '_on_Enemy_hit', [enemy])
+		enemy.connect('hit_player', self, '_on_Player_hit')
 		
 		
 func _on_Enemy_possessed(enemy):
@@ -20,6 +21,9 @@ func _on_Enemy_possessed(enemy):
 func _on_Enemy_hit(enemy):
 	pass
 	
+func _on_Player_hit():
+	game_over()
+	pass
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -41,3 +45,6 @@ func stop_possessing():
 	possessedEnemy = null
 	ghost.possess_end()
 	
+	
+func game_over():
+	Game.game_over()

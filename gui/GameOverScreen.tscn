@@ -1,32 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/images/game-over-spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://gui/game_over_screen.gd" type="Script" id=2]
-
-
-
-[sub_resource type="AtlasTexture" id=1]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 128, 0, 128, 64 )
-
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 256, 0, 128, 64 )
-
-[sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 384, 0, 128, 64 )
-
-[sub_resource type="SpriteFrames" id=4]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
 
 [node name="GameOverScreen" type="Control"]
 pause_mode = 2
@@ -45,8 +19,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 529, 276 )
-scale = Vector2( 5.0625, 5.0625 )
-frames = SubResource( 4 )
-playing = true
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 161.0
+margin_top = 94.0
+margin_right = -161.0
+margin_bottom = -95.0
+text = "GAME OVERRRRRR"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 161.0
+margin_top = 141.73
+margin_right = -161.0
+margin_bottom = -47.2703
+text = "press R to restart"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
