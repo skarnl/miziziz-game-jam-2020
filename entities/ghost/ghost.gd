@@ -41,3 +41,8 @@ func possess_start(targetPosition):
 func possess_end():
 	Audioplayer.play('exit_possess')
 	show()
+	set_process(false)
+	
+	yield(get_tree().create_timer(0.4), 'timeout')
+	
+	set_process(true)
