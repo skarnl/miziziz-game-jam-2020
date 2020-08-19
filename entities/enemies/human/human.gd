@@ -105,7 +105,7 @@ func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
 		if event.is_action_pressed('attack'):
 			emit_signal('hit')
-		elif event.is_action_pressed('possess') and not possessed:
+		elif event.is_action_pressed('possess') and current_state != POSSESSED:
 			emit_signal('possessed')
 
 

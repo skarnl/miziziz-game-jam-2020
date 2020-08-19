@@ -63,6 +63,9 @@ func _unhandled_input(event):
 				
 func start_possessing(enemy):
 	ghost.possess_start(enemy.position)
+	
+	yield(get_tree().create_timer(0.3), 'timeout')
+	
 	possessedEnemy = enemy
 	enemy.possessed = true
 	change_state_to(POSSESSED)
