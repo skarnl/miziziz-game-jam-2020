@@ -2,7 +2,7 @@ extends Node
 
 var should_swap = false
 
-const NORMAL_VOLUME = -3
+const NORMAL_VOLUME = -10
 const SILENCE_VOLUME = -80
 
 var playing_count = 0
@@ -12,7 +12,7 @@ func _ready():
 	$Timer.wait_time = $AudioStreamPlayer1.stream.get_length()
 	$Timer.start()
 	
-	yield(get_tree(), 'idle_frame')
+#	yield(get_tree(), 'idle_frame')
 	
 	for child in get_audio_tracks():
 		child.play()
