@@ -32,9 +32,9 @@ func _ready():
 func _on_body_entered(otherBody):
 	print("_on_body_entered")
 	
-	if otherBody.is_in_group('enemies'):
-		otherBody.explode()
-		explode()
+#	if otherBody.is_in_group('enemies'):
+#		otherBody.explode()
+#		explode()
 
 
 func explode():
