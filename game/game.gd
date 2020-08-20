@@ -17,7 +17,6 @@ func _ready():
 		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
 		enemy.connect('died', self, '_on_Enemy_died', [enemy])
 		
-		
 func change_state_to(new_state):
 	match(current_state):
 		GHOST:
@@ -38,6 +37,14 @@ func handle_state_change(new_state):
 
 		
 func _on_Enemy_possessed(enemy):
+	if current_state == POSSESSED:
+		set_process(false)
+		ghost.possess_end()
+		
+#		yield(get_tree().create_timer(0.3), 'timeout')
+		
+		possessedEnemy.explode()
+		
 	start_possessing(enemy)
 	
 	
@@ -75,10 +82,7 @@ func start_possessing(enemy):
 func stop_possessing():
 	set_process(false)
 	change_state_to(GHOST)
-	finish_aiming()
-	
-	
-func finish_aiming():
+
 	possessedEnemy.possessed = false
 	ghost.position = possessedEnemy.position
 	possessedEnemy = null
