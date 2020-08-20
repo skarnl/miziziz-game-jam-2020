@@ -13,8 +13,9 @@ func _process(delta):
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	input_vector = input_vector.normalized()
-		
+	
 	if input_vector != Vector2.ZERO:
+		$AnimationPlayer.play('move')
 		velocity = input_vector * MAX_SPEED
 	else:
 		velocity = Vector2.ZERO
@@ -27,6 +28,10 @@ func spawn():
 	
 	$AnimationPlayer.play('spawn')
 	Audioplayer.play('spawn')
+	
+	yield($AnimationPlayer, 'animation_finished')
+	
+	$AnimationPlayer.play('move')
 	
 func possess_start(targetPosition):
 	$Tween.interpolate_property(self, 'position', position, targetPosition, 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
