@@ -14,6 +14,7 @@ var current_state = NORMAL
 
 var previous_input
 
+var bounces = 2
 
 func _ready():
 	$hint.hide()
@@ -125,7 +126,19 @@ func _integrate_forces(state):
 		state.set_linear_velocity(velocity)
 
 func _on_body_entered(otherBody):
-	print("_on_body_entered", otherBody)
+	print("_on_body_entered", otherBody.name)
+	
+	if otherBody.name == 'walls' or otherBody.name == 'doors':
+		randomize()
+		var sounds = ['bounceAudioPlayer', 'bounceAudioPlayer2', 'bounceAudioPlayer3']
+		sounds.shuffle()
+		
+		var soundPlayer = sounds.front()
+		get_node(soundPlayer).play()
+		
+		bounces -= 1
+		if bounces < 0:
+			explode()
 	
 	# TODO check the velocity of me - if it was fast enough, then we will explode
 	if otherBody.is_in_group('enemies'):

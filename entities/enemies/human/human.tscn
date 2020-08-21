@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://entities/enemies/human/human.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/sfx/bounce3.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/sfx/bounce6.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/sfx/bounce4.wav" type="AudioStream" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 3.0
@@ -153,3 +156,15 @@ position = Vector2( 6, 6 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 502, 246, 7, 8 )
+
+[node name="bounceAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+bus = "SFX"
+
+[node name="bounceAudioPlayer2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+bus = "SFX"
+
+[node name="bounceAudioPlayer3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+bus = "SFX"
