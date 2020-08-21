@@ -46,6 +46,7 @@ func _on_Enemy_died(enemy):
 	var explosion = explosionScene.instance()
 	explosion.position = enemy.position
 	$explosions_instances.add_child(explosion)
+	Audioplayer.play('splash')
 	
 	$Lights.removeLightForEnemy(enemy)
 	
@@ -75,9 +76,13 @@ func start_possessing(enemy):
 	enemy.start_possessing()
 	change_state_to(POSSESSED)
 	set_process(true)
+	
+	$possessedAudioPlayer.play()
 
 
 func stop_possessing():
+	$possessedAudioPlayer.stop()
+	
 	set_process(false)
 	change_state_to(GHOST)
 
@@ -88,9 +93,7 @@ func stop_possessing():
 	ghost.position = possessedEnemy.position
 	possessedEnemy = null
 	ghost.possess_end()
-	
-	
-	
+
 	
 func game_over():
 	Game.game_over()

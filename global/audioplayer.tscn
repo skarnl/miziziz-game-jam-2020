@@ -1,18 +1,32 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/sounds/sfx/Ghost_into_body_N.wav" type="AudioStream" id=1]
 [ext_resource path="res://global/audioplayer.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/sfx/Ghost_outof_body_N.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/sounds/sfx/Ghost_Spawn_N.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/sfx/SPLAT 2.wav" type="AudioStream" id=5]
 
 [node name="Node" type="Node"]
 script = ExtResource( 2 )
 
 [node name="intoBodyAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
+bus = "SFX"
 
 [node name="outofBodyAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+bus = "SFX"
 
 [node name="spawnAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "SFX"
+
+[node name="splashAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -6.24
+bus = "SFX"
+
+[node name="splashAudio2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -6.24
+bus = "SFX"

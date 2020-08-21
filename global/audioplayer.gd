@@ -8,3 +8,5 @@ func play(name):
 			$outofBodyAudio.play()
 		'spawn':
 			$spawnAudio.play()
+		'splash':
+			$splashAudio.play()
