@@ -5,7 +5,12 @@ var should_swap = false
 const NORMAL_VOLUME = -10
 const SILENCE_VOLUME = -80
 
+var music_muted = false
+
 var playing_count = 0
+
+func get_is_music_muted():
+	return music_muted
 
 func _ready():
 	$Timer.connect('timeout', self, '_tick')
@@ -118,3 +123,8 @@ func _tick():
 
 func bounce():
 	should_swap = true
+
+func toggle_music():
+	music_muted = !music_muted
+	
+	AudioServer.set_bus_mute(AudioServer.get_bus_index('BackgroundMusic'), music_muted)
