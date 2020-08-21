@@ -11,6 +11,8 @@ var possessedEnemy
 onready var ghost = $Ghost
 
 func _ready():
+	$MakeDark.show()
+	
 	var enemies = get_tree().get_nodes_in_group('enemies')
 		
 	for enemy in enemies:
