@@ -9,10 +9,8 @@ var playing_count = 0
 
 func _ready():
 	$Timer.connect('timeout', self, '_tick')
-	$Timer.wait_time = $AudioStreamPlayer1.stream.get_length()
+	$Timer.wait_time = $AudioStreamPlayer1.stream.get_length() * 2 # every 2 'rounds' we swap
 	$Timer.start()
-	
-#	yield(get_tree(), 'idle_frame')
 	
 	for child in get_audio_tracks():
 		child.play()
@@ -37,30 +35,37 @@ func play_track(track):
 	track.set_volume_db(NORMAL_VOLUME)
 	playing_count += 1
 	
-	print('play track:', track.name, playing_count)
+	print('play track:', track.name, ' ', playing_count)
 
 func silence_track(track):
 	track.set_volume_db(SILENCE_VOLUME)
 	playing_count = max(playing_count - 1, 0)
 	
-	print('silence track:', track.name, playing_count)
+	print('silence track:', track.name, ' ', playing_count)
 
 
 func is_playing(track):
 	return track.get_volume_db() > SILENCE_VOLUME
 
 func start_random_streams():
-	randomize()
 	var tracks = get_audio_tracks()
 	var randomized_tracks = tracks.duplicate()
 	
+	# start either stream 4 or 6 - one of the base tracks
+	var percent = randf()
+	if percent > 0.5:
+		play_track($AudioStreamPlayer4)
+	else:
+		play_track($AudioStreamPlayer6)
+	
+	# add 2 more tracks to start with1
 	var count = 0
 	for track in randomized_tracks:
 		if is_playing(track) == false:
 			play_track(track)	
 			count += 1
 		
-		if count == 3:
+		if count == 2:
 			return
 	
 func silence_random_track():
@@ -75,7 +80,15 @@ func start_random_track():
 	for track in tracks:
 		if !is_playing(track):
 			play_track(track)
-			return
+			break
+	
+func check_at_least_one_mandatory_track_is_playing():
+	var tracks = get_audio_tracks()
+	for track in tracks:
+		if is_playing(track) and (track.name == 'AudioStreamPlayer4' or track.name == 'AudioStreamPlayer6'):
+			return true
+			
+	return false
 	
 func replace_random_track():
 	randomize()
@@ -88,6 +101,12 @@ func replace_random_track():
 		
 	if (percent > 0.2):
 		start_random_track()
+		
+	var check = check_at_least_one_mandatory_track_is_playing()
+	
+	print("at least stream4 or stream6 is playing:", check)
+	if !check:
+		replace_random_track()
 	
 func _tick():
 	print('#tick')
