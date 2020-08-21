@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entities/world/light.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/spot.png" type="Texture" id=2]
+
+[node name="Light" type="Light2D"]
+position = Vector2( -614.078, 113.933 )
+scale = Vector2( 0.319485, 0.319485 )
+texture = ExtResource( 2 )
+texture_scale = 6.03
+script = ExtResource( 1 )

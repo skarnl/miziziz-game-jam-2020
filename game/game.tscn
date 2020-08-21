@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://entities/ghost/ghost.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
@@ -6,9 +6,13 @@
 [ext_resource path="res://entities/enemies/human/human.tscn" type="PackedScene" id=4]
 [ext_resource path="res://walls.tres" type="TileSet" id=5]
 [ext_resource path="res://doors.tres" type="TileSet" id=6]
+[ext_resource path="res://game/lights.gd" type="Script" id=9]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0, 0, 0, 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
@@ -20,7 +24,7 @@ collision_bounce = 0.9
 collision_layer = 4
 collision_mask = 31
 format = 1
-tile_data = PoolIntArray( 196613, 3, 1, 196625, 1610612739, 1, 393196, 536870915, 1, 458718, 536870915, 1, 458727, 536870915, 0, 458740, 536870915, 0, 458749, 536870915, 0, 393223, -1073741821, 1, 524268, 536870915, 0, 524275, 536870915, 1, 524279, 536870915, 1, 458774, 3, 1, 458781, 3, 1, 589788, 536870915, 0, 589795, 536870915, 1, 589816, 536870915, 0, 524288, 536870915, 0, 524289, 536870915, 0, 524306, -1610612733, 1, 655322, 536870915, 1, 655340, 536870915, 1, 655348, 536870915, 0, 720866, 536870915, 0, 720893, 536870915, 0, 720894, 536870915, 0, 786437, 1610612739, 1, 917518, -1073741821, 1, 917525, 3, 1 )
+tile_data = PoolIntArray( 196613, 3, 1, 196625, 1610612739, 1, 393196, 536870915, 1, 458718, 536870915, 1, 458727, 536870915, 0, 458740, 536870915, 0, 458749, 536870915, 0, 393223, -1073741821, 1, 524268, 536870915, 0, 524279, 536870915, 1, 458774, 3, 1, 458781, 3, 1, 589788, 536870915, 0, 589795, 536870915, 1, 589816, 536870915, 0, 524288, 536870915, 0, 524289, 536870915, 0, 524306, -1610612733, 1, 655322, 536870915, 1, 655340, 536870915, 1, 655348, 536870915, 0, 720866, 536870915, 0, 720893, 536870915, 0, 720894, 536870915, 0, 786437, 1610612739, 1, 851968, 536870915, 1, 983037, 536870915, 0, 917518, -1073741821, 1, 917525, 3, 1, 983041, 536870915, 1, 1114110, 536870915, 3, 1114112, 536870915, 1 )
 
 [node name="props" type="TileMap" parent="."]
 modulate = Color( 1, 0.0470588, 0, 1 )
@@ -81,7 +85,17 @@ collision_mask = 17
 
 [node name="Human" parent="." instance=ExtResource( 4 )]
 modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
-position = Vector2( -14.3386, 252.968 )
+position = Vector2( -38.6414, 233.602 )
+rotation = 0.0021113
+
+[node name="Human3" parent="." instance=ExtResource( 4 )]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+position = Vector2( -528.495, 156.137 )
+rotation = 0.0021113
+
+[node name="Human2" parent="." instance=ExtResource( 4 )]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+position = Vector2( 44.5197, 97.6579 )
 rotation = 0.0021113
 
 [node name="Label" type="Label" parent="."]
@@ -95,3 +109,6 @@ Exit possess with Q"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Lights" type="Node2D" parent="."]
+script = ExtResource( 9 )

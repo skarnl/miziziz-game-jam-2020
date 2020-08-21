@@ -4,7 +4,7 @@ var possessed = false
 
 var explosionScene = preload('res://entities/world/explosion.tscn')
 
-enum { GHOST, POSSESSED, AIMING }
+enum { GHOST, POSSESSED }
 var current_state = GHOST
 
 var possessedEnemy
@@ -24,13 +24,9 @@ func change_state_to(new_state):
 				handle_state_change(new_state)
 				
 		POSSESSED:
-			if new_state in [AIMING, GHOST]:
+			if new_state in [GHOST]:
 				handle_state_change(new_state)
 			
-		AIMING:
-			if new_state == GHOST:
-				handle_state_change(new_state)
-
 
 func handle_state_change(new_state):
 	current_state = new_state
@@ -41,8 +37,6 @@ func _on_Enemy_possessed(enemy):
 		set_process(false)
 		ghost.possess_end()
 		
-#		yield(get_tree().create_timer(0.3), 'timeout')
-		
 		possessedEnemy.explode()
 		
 	start_possessing(enemy)
@@ -52,6 +46,10 @@ func _on_Enemy_died(enemy):
 	var explosion = explosionScene.instance()
 	explosion.position = enemy.position
 	$explosions_instances.add_child(explosion)
+	
+	$Lights.removeLightForEnemy(enemy)
+	
+	$Lights.addLight(explosion, 'blood')
 	
 func _on_Player_hit():
 	game_over()
@@ -74,7 +72,7 @@ func start_possessing(enemy):
 	yield(get_tree().create_timer(0.3), 'timeout')
 	
 	possessedEnemy = enemy
-	enemy.possessed = true
+	enemy.start_possessing()
 	change_state_to(POSSESSED)
 	set_process(true)
 
@@ -83,10 +81,14 @@ func stop_possessing():
 	set_process(false)
 	change_state_to(GHOST)
 
-	possessedEnemy.possessed = false
+	possessedEnemy.stop_possessing()
+	
+	$Lights.addLight(possessedEnemy, 'enemy')
+	
 	ghost.position = possessedEnemy.position
 	possessedEnemy = null
 	ghost.possess_end()
+	
 	
 	
 	
