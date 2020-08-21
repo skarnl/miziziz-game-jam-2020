@@ -5,7 +5,11 @@ var MAX_SPEED = 110
 var possessed = false
 	
 func _ready():
-	spawn()
+	Audioplayer.play('spawn')
+	
+	yield($AnimationPlayer, 'animation_finished')
+	
+	$AnimationPlayer.play('move')
 	
 func _process(delta):
 	var input_vector = Vector2.ZERO
@@ -15,23 +19,12 @@ func _process(delta):
 	input_vector = input_vector.normalized()
 	
 	if input_vector != Vector2.ZERO:
-		$AnimationPlayer.play('move')
 		velocity = input_vector * MAX_SPEED
 	else:
 		velocity = Vector2.ZERO
 	
 	move_and_slide(velocity)
-
-
-func spawn():
-	yield(get_tree().create_timer(0.3), 'timeout')
 	
-	$AnimationPlayer.play('spawn')
-	Audioplayer.play('spawn')
-	
-	yield($AnimationPlayer, 'animation_finished')
-	
-	$AnimationPlayer.play('move')
 	
 func possess_start(targetPosition):
 	$Tween.interpolate_property(self, 'position', position, targetPosition, 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)

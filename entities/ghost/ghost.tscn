@@ -55,6 +55,7 @@ position = Vector2( 0, 0.638779 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spawn"
 anims/move = SubResource( 4 )
 anims/spawn = SubResource( 3 )
 

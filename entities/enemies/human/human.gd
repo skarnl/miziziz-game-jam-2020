@@ -3,17 +3,16 @@ extends RigidBody2D
 signal possessed
 signal died
 
-var possessed = false setget set_possessed
 var velocity: Vector2 = Vector2.ZERO
 var MAX_SPEED = 110
 enum DIRECTIONS { right, down, left, up }
 
 var player_nearby = false
 
-enum { POSSESSED, NORMAL, ALERTED, SEARCHING, DEAD }
+enum { NORMAL, POSSESSED, WAS_POSSESSED }
 var current_state = NORMAL
 
-var playerRef
+var previous_input
 
 
 func _ready():
@@ -21,73 +20,61 @@ func _ready():
 	
 	set_process_unhandled_input(false)
 	
-	set_player_detection()
-
-	var allPlayers = get_tree().get_nodes_in_group('player')
-	playerRef = allPlayers.front()
-	
-	connect('body_entered', self, '_on_body_entered')
+	init_player_detection()
 
 
-func _on_body_entered(otherBody):
-	print("_on_body_entered")
-	
-#	if otherBody.is_in_group('enemies'):
-#		otherBody.explode()
-#		explode()
-
-
-func explode():
-	emit_signal('died')
-	
-	queue_free()
+func init_player_detection():
+	$PlayerInteractionArea2D.connect('body_entered', self, '_on_Player_nearby')
+	$PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
 
 
 func change_state_to(next_state):
+	
+	print('change_state_to: ', next_state)
+	
 	match(current_state):
 		NORMAL:
-			handle_state_change(next_state)
-			
-		POSSESSED:
-			if next_state in [NORMAL, DEAD]:
+			if next_state in [POSSESSED]:
 				handle_state_change(next_state)
 			
-		ALERTED:
-			if next_state in [NORMAL, DEAD]:
+		POSSESSED:
+			if next_state in [WAS_POSSESSED]:
+				handle_state_change(next_state)
+
+		WAS_POSSESSED:
+			if next_state in [POSSESSED]:
 				handle_state_change(next_state)
 	
 	
 func handle_state_change(next_state):
 	current_state = next_state
 	
-	match(current_state):	
-		NORMAL:
-			set_process(false)
-			set_process_unhandled_input(false)
-			
-		ALERTED:
-			$AlertAnimationPlayer.play('alert')
-			set_process(true)
-			
+	match(current_state):
 		POSSESSED:
+			$AnimationPlayer.play('possessed')
+			set_mode(RigidBody2D.MODE_CHARACTER)
+			
 			set_process(true)
 			set_process_unhandled_input(true)
+		
+		WAS_POSSESSED:
+			set_mode(RigidBody2D.MODE_RIGID)
+		
+			yield(get_tree(), 'idle_frame')
 			
-		DEAD:
-			#TODO play dead animation
+			var torque = 100 if previous_input.x > 0 else -100
+			apply_torque_impulse(torque)
+			
+			apply_impulse(Vector2.ZERO, previous_input * 10)
 			
 			set_process(false)
 			set_process_unhandled_input(false)
+			
+			connect('body_entered', self, '_on_body_entered')
 
-
-func set_player_detection():
-	$PlayerInteractionArea2D.connect('body_entered', self, '_on_Player_nearby')
-	$PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
-	
 	
 func _on_Player_nearby(body):
-	if body.is_in_group('player') and current_state == NORMAL:
-		
+	if body.is_in_group('player') and current_state != POSSESSED:
 		$hint.show()
 		player_nearby = true
 		set_process_unhandled_input(true)
@@ -95,12 +82,10 @@ func _on_Player_nearby(body):
 
 func _on_Player_away(body):
 	if body.is_in_group('player'):
-		
 		$hint.hide()
 		player_nearby = false
 		set_process_unhandled_input(false)
-		
-
+	
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
 		if event.is_action_pressed('attack'):
@@ -109,29 +94,14 @@ func _unhandled_input(event):
 			emit_signal('possessed')
 
 
-func set_possessed(new_value):
-	possessed = new_value
+func stop_possessing():
+	change_state_to(WAS_POSSESSED)
+
+func start_possessing():
+	change_state_to(POSSESSED)
 	$AnimationPlayer.play('possessed')
 	
-	if not possessed:
-		set_mode(RigidBody2D.MODE_RIGID)
-		
-		yield(get_tree(), 'idle_frame')
-		
-		var torque = 100 if previous_input.x > 0 else -100
-		apply_torque_impulse(torque)
-		
-		apply_impulse(Vector2.ZERO, previous_input * 10)
-	else:
-		set_mode(RigidBody2D.MODE_CHARACTER)
-		
-	current_state = POSSESSED if possessed else NORMAL
-	
-	if possessed:
-		$hint.hide()
-
-
-var previous_input
+	$hint.hide()
 
 func _integrate_forces(state):
 	if current_state == POSSESSED:
@@ -153,3 +123,16 @@ func _integrate_forces(state):
 			velocity = Vector2.ZERO
 		
 		state.set_linear_velocity(velocity)
+
+func _on_body_entered(otherBody):
+	print("_on_body_entered", otherBody)
+	
+	# TODO check the velocity of me - if it was fast enough, then we will explode
+	if otherBody.is_in_group('enemies'):
+		otherBody.explode()
+		explode()	
+
+func explode():
+	emit_signal('died')
+	
+	queue_free()
