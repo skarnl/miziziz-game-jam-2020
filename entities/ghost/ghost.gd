@@ -10,6 +10,7 @@ func _ready():
 	yield($AnimationPlayer, 'animation_finished')
 	
 	$AnimationPlayer.play('move')
+	$possessedAudioPlayer.play()
 	
 func _process(delta):
 	var input_vector = Vector2.ZERO
@@ -20,8 +21,11 @@ func _process(delta):
 	
 	if input_vector != Vector2.ZERO:
 		velocity = input_vector * MAX_SPEED
+		if possessed:
+			$possessedAudioPlayer.set_volume_db(0)
 	else:
 		velocity = Vector2.ZERO
+		$possessedAudioPlayer.set_volume_db(-80)
 	
 	move_and_slide(velocity)
 	
@@ -35,8 +39,12 @@ func possess_start(targetPosition):
 	yield($Tween, 'tween_completed')
 	
 	hide()
+	
+	possessed = true
 
 func possess_end():
+	possessed = false
+	
 	Audioplayer.play('exit_possess')
 	show()
 	set_process(false)

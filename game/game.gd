@@ -78,13 +78,9 @@ func start_possessing(enemy):
 	enemy.start_possessing()
 	change_state_to(POSSESSED)
 	set_process(true)
-	
-	$possessedAudioPlayer.play()
 
 
 func stop_possessing():
-	$possessedAudioPlayer.stop()
-	
 	set_process(false)
 	change_state_to(GHOST)
 
