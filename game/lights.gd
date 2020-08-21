@@ -24,6 +24,6 @@ func addLight(entity, type):
 
 func removeLightForEnemy(enemy):
 	for child in get_children():
-		if child.target.name == enemy.name:
+		if child.target and child.target.name == enemy.name:
 			child.queue_free()
 			break
