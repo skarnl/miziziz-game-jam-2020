@@ -24,6 +24,9 @@ func addLight(entity, type):
 			_addLightToTarget(entity, bloodLightPrefab)
 
 func removeLightForEnemyInstanceId(enemyInstanceId):
+	if !lightmap.has(enemyInstanceId):
+		return 
+		
 	var child = lightmap[enemyInstanceId]
 	child.queue_free()
 	
