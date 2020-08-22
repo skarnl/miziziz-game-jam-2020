@@ -21,6 +21,9 @@ func _process(delta):
 	
 	if input_vector != Vector2.ZERO:
 		velocity = input_vector * MAX_SPEED
+		
+		$Sprite.flip_h = velocity.x > 0
+		
 		if possessed:
 			$possessedAudioPlayer.set_volume_db(0)
 	else:
