@@ -56,7 +56,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 19.0
+radius = 27.0185
 
 [node name="Human" type="RigidBody2D" groups=[
 "enemies",
@@ -87,6 +87,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractionArea2D"]
+position = Vector2( -1, -2 )
 shape = SubResource( 5 )
 
 [node name="HeadSprite" type="Sprite" parent="."]
@@ -129,7 +130,7 @@ region_enabled = true
 region_rect = Rect2( 544.851, 34.6967, 15.4074, 16.5926 )
 
 [node name="hint" type="Node2D" parent="."]
-visible = false
+position = Vector2( 2, -3 )
 
 [node name="hintcorner" type="Sprite" parent="hint"]
 position = Vector2( 6, -7 )
