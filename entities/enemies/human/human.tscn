@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://entities/enemies/human/human.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/sfx/bounce3.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/sounds/sfx/bounce6.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/sounds/sfx/bounce4.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/images/monochrome_transparent_packed.png" type="Texture" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 3.0
@@ -58,6 +59,9 @@ tracks/2/keys = {
 [sub_resource type="CircleShape2D" id=5]
 radius = 27.0185
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 52.0
+
 [node name="Human" type="RigidBody2D" groups=[
 "enemies",
 ]]
@@ -73,15 +77,13 @@ script = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 3.013
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 anims/idle = SubResource( 3 )
 anims/possessed = SubResource( 4 )
 
 [node name="PlayerInteractionArea2D" type="Area2D" parent="."]
+visible = false
 input_pickable = false
 collision_layer = 2
 collision_mask = 4
@@ -167,3 +169,25 @@ bus = "SFX"
 [node name="bounceAudioPlayer3" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 bus = "SFX"
+
+[node name="PlayerDetectionArea2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea2D"]
+shape = SubResource( 6 )
+
+[node name="DetectionTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="QuestionMarkSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -21 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 608, 208, 16, 16 )
+
+[node name="AlertMarkSprite" type="Sprite" parent="."]
+position = Vector2( 0, -21 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 560, 208, 16, 16 )

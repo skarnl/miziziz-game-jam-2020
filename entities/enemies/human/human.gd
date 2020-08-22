@@ -9,17 +9,23 @@ enum DIRECTIONS { right, down, left, up }
 
 var player_nearby = false
 
-enum { NORMAL, POSSESSED, WAS_POSSESSED }
+enum { NORMAL, POSSESSED, WAS_POSSESSED, SEARCHING, ALERTED }
 var current_state = NORMAL
 
 var previous_input
+var playerRef
 
-var bounces = 2
+var bounces = 0
 
 func _ready():
 	$hint.hide()
+	$QuestionMarkSprite.hide()
+	$AlertMarkSprite.hide()
 	
 	set_process_unhandled_input(false)
+	
+	var allPlayers = get_tree().get_nodes_in_group('player')
+	playerRef = allPlayers.front()
 	
 	init_player_detection()
 
@@ -27,6 +33,10 @@ func _ready():
 func init_player_detection():
 	$PlayerInteractionArea2D.connect('body_entered', self, '_on_Player_nearby')
 	$PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
+	
+	$PlayerDetectionArea2D.connect('body_entered', self, '_on_Player_detected')
+	$PlayerDetectionArea2D.connect('body_exited', self, '_on_Player_lost')
+	$DetectionTimer.connect('timeout', self, '_on_DetectionTimer_timeout')
 
 
 func change_state_to(next_state):
@@ -35,7 +45,7 @@ func change_state_to(next_state):
 	
 	match(current_state):
 		NORMAL:
-			if next_state in [POSSESSED]:
+			if next_state in [POSSESSED, SEARCHING]:
 				handle_state_change(next_state)
 			
 		POSSESSED:
@@ -45,17 +55,27 @@ func change_state_to(next_state):
 		WAS_POSSESSED:
 			if next_state in [POSSESSED]:
 				handle_state_change(next_state)
-	
+		
+		SEARCHING:
+			if next_state in [NORMAL, ALERTED, POSSESSED]:
+				handle_state_change(next_state)
+				
 	
 func handle_state_change(next_state):
 	current_state = next_state
 	
+	$QuestionMarkSprite.hide()
+	$AlertMarkSprite.hide()
+	
 	match(current_state):
+		NORMAL:
+			$DetectionTimer.stop()
+			
 		POSSESSED:
 			$AnimationPlayer.play('possessed')
 			set_mode(RigidBody2D.MODE_CHARACTER)
 			
-			set_process(true)
+#			set_process(true)
 			set_process_unhandled_input(true)
 			
 			disconnect('body_entered', self, '_on_body_entered')
@@ -70,14 +90,22 @@ func handle_state_change(next_state):
 			
 			apply_impulse(Vector2.ZERO, previous_input * 10)
 			
-			set_process(false)
+#			set_process(false)
 			set_process_unhandled_input(false)
 			
 			connect('body_entered', self, '_on_body_entered')
-
+		
+		SEARCHING:
+			start_detection()
+		
+		ALERTED:
+			$AlertMarkSprite.show()
+			set_mode(RigidBody2D.MODE_CHARACTER)
+			
+#			set_process(true)
 	
 func _on_Player_nearby(body):
-	if body.is_in_group('player') and current_state != POSSESSED:
+	if body.is_in_group('player') and current_state in [NORMAL, SEARCHING, WAS_POSSESSED]:
 		$hint.show()
 		player_nearby = true
 		set_process_unhandled_input(true)
@@ -88,7 +116,22 @@ func _on_Player_away(body):
 		$hint.hide()
 		player_nearby = false
 		set_process_unhandled_input(false)
+
+func _on_Player_detected(body):
+	if body.is_in_group('player'):
+		change_state_to(SEARCHING)
+
+func _on_Player_lost(body):
+	if body.is_in_group('player'):
+		change_state_to(NORMAL)
+
+func start_detection():
+	$QuestionMarkSprite.show()
+	$DetectionTimer.start()
 	
+func _on_DetectionTimer_timeout():
+	change_state_to(ALERTED)
+
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
 		if event.is_action_pressed('attack'):
@@ -127,6 +170,11 @@ func _integrate_forces(state):
 		previous_input = input_vector
 		
 		state.set_linear_velocity(velocity)
+	elif current_state == ALERTED:
+		var motion = (playerRef.get_global_position() - self.global_position)
+		state.set_linear_velocity(motion.normalized() * 30)
+		
+		# TODO check distance? or line of sight?
 
 func _on_body_entered(otherBody):
 	print("_on_body_entered", otherBody.name)

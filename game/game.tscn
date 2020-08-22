@@ -91,7 +91,7 @@ rotation = 0.0021113
 
 [node name="Human3" parent="." instance=ExtResource( 4 )]
 modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
-position = Vector2( -528.495, 156.137 )
+position = Vector2( -530.686, 153.946 )
 rotation = 0.0021113
 
 [node name="Human2" parent="." instance=ExtResource( 4 )]
