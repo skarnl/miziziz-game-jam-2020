@@ -33,6 +33,7 @@ func _process(delta):
 func possess_start(targetPosition):
 	$Tween.interpolate_property(self, 'position', position, targetPosition, 0.3, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$Tween.start()
+	$CollisionShape2D.disabled = true
 	
 	Audioplayer.play('possess')
 	
@@ -44,6 +45,8 @@ func possess_start(targetPosition):
 
 func possess_end():
 	possessed = false
+	
+	$CollisionShape2D.disabled = false
 	
 	Audioplayer.play('exit_possess')
 	show()

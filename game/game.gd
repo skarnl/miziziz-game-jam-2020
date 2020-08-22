@@ -32,7 +32,14 @@ func change_state_to(new_state):
 
 func handle_state_change(new_state):
 	current_state = new_state
-
+	
+	match(current_state):
+		GHOST:
+			$walls.set_collision_bounce(0.9)
+#
+		POSSESSED:
+			$walls.set_collision_bounce(0)
+#			
 		
 func _on_Enemy_possessed(enemy):
 	if current_state == POSSESSED:
@@ -44,7 +51,9 @@ func _on_Enemy_possessed(enemy):
 	start_possessing(enemy)
 	
 	
-func _on_Enemy_died(enemy):
+func _on_Enemy_died(cause, enemy):
+	
+	#if cause and cause.name == 'walls':
 	var explosion = explosionScene.instance()
 	explosion.position = enemy.position
 	$explosions_instances.add_child(explosion)
@@ -71,6 +80,7 @@ func _unhandled_input(event):
 				
 func start_possessing(enemy):
 	ghost.possess_start(enemy.position)
+	$Lights.addLight(enemy, 'enemy')
 	
 	yield(get_tree().create_timer(0.3), 'timeout')
 	
@@ -85,8 +95,6 @@ func stop_possessing():
 	change_state_to(GHOST)
 
 	possessedEnemy.stop_possessing()
-	
-	$Lights.addLight(possessedEnemy, 'enemy')
 	
 	ghost.position = possessedEnemy.position
 	possessedEnemy = null
