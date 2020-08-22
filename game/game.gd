@@ -80,6 +80,7 @@ func _unhandled_input(event):
 				
 func start_possessing(enemy):
 	ghost.possess_start(enemy.position)
+	$Lights.addLight(enemy, 'enemy')
 	
 	yield(get_tree().create_timer(0.3), 'timeout')
 	
@@ -94,8 +95,6 @@ func stop_possessing():
 	change_state_to(GHOST)
 
 	possessedEnemy.stop_possessing()
-	
-	$Lights.addLight(possessedEnemy, 'enemy')
 	
 	ghost.position = possessedEnemy.position
 	possessedEnemy = null
