@@ -17,7 +17,7 @@ func _ready():
 		
 	for enemy in enemies:
 		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
-		enemy.connect('died', self, '_on_Enemy_died', [enemy])
+		enemy.connect('died', self, '_on_Enemy_died', [enemy.get_instance_id()])
 		
 func change_state_to(new_state):
 	match(current_state):
@@ -51,15 +51,15 @@ func _on_Enemy_possessed(enemy):
 	start_possessing(enemy)
 	
 	
-func _on_Enemy_died(cause, enemy):
+func _on_Enemy_died(cause, enemy_position, enemyInstanceId):
 	
 	#if cause and cause.name == 'walls':
 	var explosion = explosionScene.instance()
-	explosion.position = enemy.position
+	explosion.position = enemy_position
 	$explosions_instances.add_child(explosion)
 	Audioplayer.play('splash')
 	
-	$Lights.removeLightForEnemy(enemy)
+	$Lights.removeLightForEnemyInstanceId(enemyInstanceId)
 	
 	$Lights.addLight(explosion, 'blood')
 	

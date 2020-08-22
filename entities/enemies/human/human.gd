@@ -152,6 +152,6 @@ func play_bounce_sound():
 	get_node(soundPlayer).play()
 
 func explode(cause = null):
-	emit_signal('died', cause)
+	emit_signal('died', cause, position)
 	
 	queue_free()

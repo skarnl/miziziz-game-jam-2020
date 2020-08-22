@@ -97,7 +97,6 @@ region_rect = Rect2( 510.899, 152, 15.4074, 8 )
 
 [node name="BodySprite" type="Sprite" parent="."]
 position = Vector2( 0, -2 )
-scale = Vector2( 0.8, 1 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 515, 160, 6, 4 )
