@@ -6,9 +6,13 @@ var sfxBusId
 func _ready():
 	$MusicButton.connect('pressed', self, '_on_MusicButton_pressed')
 	$SFXButton.connect('pressed', self, '_on_SFXButton_pressed')
-
+	
 	backgroundMusicBusId = AudioServer.get_bus_index('BackgroundMusic')
 	sfxBusId = AudioServer.get_bus_index('SFX')
+	
+	# TEMP DISABLE SOUNDS
+	_on_MusicButton_pressed()
+	_on_SFXButton_pressed()
 
 func _on_MusicButton_pressed():
 	var is_muted = AudioServer.is_bus_mute(backgroundMusicBusId)
