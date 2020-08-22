@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://gui/Pause.gd" type="Script" id=2]
 [ext_resource path="res://gui/soundManager.gd" type="Script" id=3]
+[ext_resource path="res://assets/images/monochrome_transparent_packed.png" type="Texture" id=4]
 
 [node name="HUD" type="CanvasLayer"]
 
@@ -33,14 +34,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Sound"]
-visible = false
-margin_left = 12.0
-margin_top = 9.0
-margin_right = 68.0
-margin_bottom = 23.0
-text = "textlabel"
-
 [node name="MusicButton" type="TextureButton" parent="Sound"]
 margin_right = 24.0
 margin_bottom = 23.0
@@ -55,3 +48,29 @@ texture = ExtResource( 1 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 661.883, 272.182, 17.7139, 15.605 )
+
+[node name="SFXButton" type="TextureButton" parent="Sound"]
+margin_left = 24.0
+margin_right = 48.0
+margin_bottom = 23.0
+mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OnSprite" type="Sprite" parent="Sound/SFXButton"]
+position = Vector2( 1.83895, 1.55556 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 608, 256, 16, 16 )
+
+[node name="OffSprite" type="Sprite" parent="Sound/SFXButton"]
+visible = false
+modulate = Color( 1, 1, 1, 0.5 )
+position = Vector2( 115, -1 )
+texture = ExtResource( 4 )
+centered = false
+offset = Vector2( -112.584, 3.5659 )
+region_enabled = true
+region_rect = Rect2( 592, 256, 16, 16 )
