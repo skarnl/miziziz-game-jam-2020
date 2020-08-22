@@ -139,16 +139,19 @@ func start_detection():
 var hit_pos
 
 func aim():
+	if position.distance_to(playerRef.position) > 100:
+		return
+		
 	var space_state = get_world_2d().direct_space_state
 	var result = space_state.intersect_ray(position, playerRef.position, [self])
 	
 	if result:
 		hit_pos = result.position
-		
+	
+	return result
 
 func _on_DetectionTimer_timeout():
-	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_ray(position, playerRef.position, [self])
+	var result = aim()
 	
 	if result and result.collider.name == 'Ghost':
 		change_state_to(ALERTED)
