@@ -57,6 +57,8 @@ func handle_state_change(next_state):
 			
 			set_process(true)
 			set_process_unhandled_input(true)
+			
+			disconnect('body_entered', self, '_on_body_entered')
 		
 		WAS_POSSESSED:
 			set_mode(RigidBody2D.MODE_RIGID)
@@ -118,10 +120,11 @@ func _integrate_forces(state):
 		
 			
 		if input_vector != Vector2.ZERO:
-			previous_input = input_vector
 			velocity = input_vector * MAX_SPEED		
 		else:
 			velocity = Vector2.ZERO
+		
+		previous_input = input_vector
 		
 		state.set_linear_velocity(velocity)
 
@@ -129,23 +132,26 @@ func _on_body_entered(otherBody):
 	print("_on_body_entered", otherBody.name)
 	
 	if otherBody.name == 'walls' or otherBody.name == 'doors':
-		randomize()
-		var sounds = ['bounceAudioPlayer', 'bounceAudioPlayer2', 'bounceAudioPlayer3']
-		sounds.shuffle()
-		
-		var soundPlayer = sounds.front()
-		get_node(soundPlayer).play()
+		play_bounce_sound()
 		
 		bounces -= 1
 		if bounces < 0:
-			explode()
+			explode(otherBody)
 	
 	# TODO check the velocity of me - if it was fast enough, then we will explode
-	if otherBody.is_in_group('enemies'):
+	elif otherBody.is_in_group('enemies'):
 		otherBody.explode()
 		explode()	
 
-func explode():
-	emit_signal('died')
+func play_bounce_sound():
+	randomize()
+	var sounds = ['bounceAudioPlayer', 'bounceAudioPlayer2', 'bounceAudioPlayer3']
+	sounds.shuffle()
+	
+	var soundPlayer = sounds.front()
+	get_node(soundPlayer).play()
+
+func explode(cause = null):
+	emit_signal('died', cause)
 	
 	queue_free()
