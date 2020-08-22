@@ -3,5 +3,5 @@
 [ext_resource path="res://entities/world/light.tscn" type="PackedScene" id=1]
 
 [node name="Light" instance=ExtResource( 1 )]
-scale = Vector2( 0.249432, 0.249432 )
+scale = Vector2( 0.171039, 0.171039 )
 color = Color( 0.0509804, 0.945098, 0.945098, 1 )
