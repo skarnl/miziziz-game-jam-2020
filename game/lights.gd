@@ -1,7 +1,6 @@
 extends Node2D
 
 var lightPrefab = preload('res://entities/world/light.tscn')
-var ghostLightPrefab = preload('res://entities/world/ghost_light.tscn')
 var enemyLightPrefab = preload('res://entities/world/enemy_light.tscn')
 var bloodLightPrefab = preload('res://entities/world/blood_light.tscn')
 	
