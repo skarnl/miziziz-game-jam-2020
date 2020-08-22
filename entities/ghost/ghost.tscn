@@ -1,14 +1,19 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://entities/ghost/ghost.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/sfx/DripDragggg.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/images/spot.png" type="Texture" id=4]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 5.99349
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.58017
 height = 0.0
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "move"
 loop = true
 tracks/0/type = "value"
@@ -24,7 +29,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
 tracks/0/interp = 1
@@ -41,6 +46,7 @@ tracks/0/keys = {
 [node name="Ghost" type="KinematicBody2D" groups=[
 "player",
 ]]
+material = SubResource( 1 )
 collision_mask = 20
 script = ExtResource( 2 )
 
@@ -49,16 +55,21 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 440, 100, 20, 20 )
 
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -0.359309, -0.598849 )
+scale = Vector2( 1.35216, 1.33061 )
+texture = ExtResource( 4 )
+
 [node name="Tween" type="Tween" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 0.638779 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "spawn"
-anims/move = SubResource( 4 )
-anims/spawn = SubResource( 3 )
+anims/move = SubResource( 3 )
+anims/spawn = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -1 )
