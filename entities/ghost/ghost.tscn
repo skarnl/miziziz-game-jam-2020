@@ -10,7 +10,7 @@ blend_mode = 1
 light_mode = 1
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 4.58017
+radius = 1.79506
 height = 0.0
 
 [sub_resource type="Animation" id=3]
@@ -57,7 +57,7 @@ region_rect = Rect2( 440, 100, 20, 20 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -0.359309, -0.598849 )
-scale = Vector2( 1.35216, 1.33061 )
+scale = Vector2( 1.79463, 1.76603 )
 texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
