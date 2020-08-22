@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/monochrome_transparent_packed.png" type="Texture" id=1]
+[ext_resource path="res://gui/global_mark.gd" type="Script" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+light_mode = 1
+
+[node name="QuestionMark" type="Sprite"]
+material = SubResource( 1 )
+position = Vector2( -500.122, 141.503 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 592, 208, 16, 16 )
+script = ExtResource( 2 )

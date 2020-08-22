@@ -2,6 +2,9 @@ extends RigidBody2D
 
 signal possessed
 signal died
+signal searching
+signal stop_searching
+signal alerted
 
 var velocity: Vector2 = Vector2.ZERO
 var MAX_SPEED = 110
@@ -19,9 +22,7 @@ var bounces = 0
 
 func _ready():
 	$hint.hide()
-	$QuestionMarkSprite.hide()
-	$AlertMarkSprite.hide()
-	
+
 	set_process_unhandled_input(false)
 	
 	var allPlayers = get_tree().get_nodes_in_group('player')
@@ -58,14 +59,12 @@ func change_state_to(next_state):
 		
 		SEARCHING:
 			if next_state in [NORMAL, ALERTED, POSSESSED]:
+				emit_signal('stop_searching')
 				handle_state_change(next_state)
 				
 	
 func handle_state_change(next_state):
 	current_state = next_state
-	
-	$QuestionMarkSprite.hide()
-	$AlertMarkSprite.hide()
 	
 	match(current_state):
 		NORMAL:
@@ -99,7 +98,7 @@ func handle_state_change(next_state):
 			start_detection()
 		
 		ALERTED:
-			$AlertMarkSprite.show()
+			emit_signal('alerted')
 			set_mode(RigidBody2D.MODE_CHARACTER)
 			
 #			set_process(true)

@@ -18,6 +18,9 @@ func _ready():
 	for enemy in enemies:
 		enemy.connect('possessed', self, '_on_Enemy_possessed', [enemy])
 		enemy.connect('died', self, '_on_Enemy_died', [enemy.get_instance_id()])
+		enemy.connect('searching', self, '_on_Enemy_start_searching', [enemy])
+		enemy.connect('stop_searching', self, '_on_Enemy_stop_searching', [enemy])
+		enemy.connect('alerted', self, '_on_Enemy_alerted', [enemy])
 		
 func change_state_to(new_state):
 	match(current_state):
@@ -62,7 +65,16 @@ func _on_Enemy_died(cause, enemy_position, enemyInstanceId):
 	$Lights.removeLightForEnemyInstanceId(enemyInstanceId)
 	
 	$Lights.addLight(explosion, 'blood')
+
+func _on_Enemy_start_searching(enemy):
+	$Alerts.addMarkToTarget(enemy, 'question')
+
+func _on_Enemy_stop_searching(enemy):
+	$Alerts.removeMarkForEnemyInstanceId(enemy.get_instance_id())
 	
+func _on_Enemy_alerted(enemy):
+	$Alerts.addMarkToTarget(enemy, 'alert')
+
 func _on_Player_hit():
 	game_over()
 	pass
