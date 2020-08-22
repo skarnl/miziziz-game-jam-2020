@@ -36,8 +36,19 @@ func init_player_detection():
 	$PlayerInteractionArea2D.connect('body_exited', self, '_on_Player_away')
 	
 	$PlayerDetectionArea2D.connect('body_entered', self, '_on_Player_detected')
-	$PlayerDetectionArea2D.connect('body_exited', self, '_on_Player_lost')
 	$DetectionTimer.connect('timeout', self, '_on_DetectionTimer_timeout')
+
+
+func _physics_process(delta):
+	aim()
+	update()
+
+var laser_color = Color(1.0, .329, .298)
+
+func _draw():
+	if hit_pos:
+		draw_circle((hit_pos - position), 4, laser_color)
+		draw_line(Vector2(), (hit_pos - position), laser_color)
 
 
 func change_state_to(next_state):
@@ -120,16 +131,29 @@ func _on_Player_detected(body):
 	if body.is_in_group('player'):
 		change_state_to(SEARCHING)
 
-func _on_Player_lost(body):
-	if body.is_in_group('player'):
-		change_state_to(NORMAL)
-
 func start_detection():
-	$QuestionMarkSprite.show()
+	emit_signal('searching')
 	$DetectionTimer.start()
 	
+	
+var hit_pos
+
+func aim():
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_ray(position, playerRef.position, [self])
+	
+	if result:
+		hit_pos = result.position
+		
+
 func _on_DetectionTimer_timeout():
-	change_state_to(ALERTED)
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_ray(position, playerRef.position, [self])
+	
+	if result and result.collider.name == 'Ghost':
+		change_state_to(ALERTED)
+	else:
+		change_state_to(NORMAL)
 
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
