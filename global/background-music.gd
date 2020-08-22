@@ -35,15 +35,10 @@ func play_track(track):
 	track.set_volume_db(NORMAL_VOLUME)
 	playing_count += 1
 	
-	print('play track:', track.name, ' ', playing_count)
-
 func silence_track(track):
 	track.set_volume_db(SILENCE_VOLUME)
 	playing_count = max(playing_count - 1, 0)
 	
-	print('silence track:', track.name, ' ', playing_count)
-
-
 func is_playing(track):
 	return track.get_volume_db() > SILENCE_VOLUME
 
@@ -58,7 +53,7 @@ func start_random_streams():
 	else:
 		play_track($AudioStreamPlayer6)
 	
-	# add 2 more tracks to start with1
+	# add 2 more tracks to start with
 	var count = 0
 	for track in randomized_tracks:
 		if is_playing(track) == false:
@@ -102,14 +97,11 @@ func replace_random_track():
 	if (percent > 0.2):
 		start_random_track()
 		
-	var check = check_at_least_one_mandatory_track_is_playing()
-	
-	print("at least stream4 or stream6 is playing:", check)
-	if !check:
+	# check at least wav4 of wav6 are playing
+	if !check_at_least_one_mandatory_track_is_playing():
 		replace_random_track()
 	
 func _tick():
-	print('#tick')
 	replace_random_track()
 	
 	if should_swap:
