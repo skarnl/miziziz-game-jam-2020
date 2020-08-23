@@ -9,7 +9,6 @@
 [ext_resource path="res://entities/world/EndOfLevel.tscn" type="PackedScene" id=7]
 
 [node name="Game" type="Node2D"]
-position = Vector2( 143.539, 14.7675 )
 script = ExtResource( 2 )
 
 [node name="MakeDark" type="CanvasModulate" parent="."]
