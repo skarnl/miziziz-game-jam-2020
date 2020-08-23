@@ -1,0 +1,143 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://entities/ghost/ghost.tscn" type="PackedScene" id=1]
+[ext_resource path="res://game/game.gd" type="Script" id=2]
+[ext_resource path="res://gui/hud.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/enemies/human/human.tscn" type="PackedScene" id=4]
+[ext_resource path="res://walls.tres" type="TileSet" id=5]
+[ext_resource path="res://doors.tres" type="TileSet" id=6]
+[ext_resource path="res://entities/world/EndOfLevel.tscn" type="PackedScene" id=7]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MakeDark" type="CanvasModulate" parent="."]
+visible = false
+color = Color( 0, 0, 0, 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="floor" type="TileMap" parent="."]
+modulate = Color( 1, 1, 1, 0.203922 )
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 16, 16 )
+collision_bounce = 0.9
+collision_layer = 4
+collision_mask = 31
+format = 1
+tile_data = PoolIntArray( 393196, 536870915, 1, 458718, 536870915, 1, 458727, 536870915, 0, 458740, 536870915, 0, 458749, 536870915, 0, 393223, -1073741821, 1, 393235, 0, 65537, 524268, 536870915, 0, 524279, 536870915, 1, 458772, 0, 65537, 458781, 3, 1, 589788, 536870915, 0, 589795, 536870915, 1, 589816, 536870915, 0, 524288, 536870915, 0, 524289, 536870915, 0, 524298, 0, 65537, 524299, 0, 65537, 524300, 0, 65537, 524301, 0, 65537, 524302, 0, 65537, 524303, 0, 65537, 524304, 0, 65537, 524305, 0, 65537, 524306, 0, 65537, 524307, 0, 65537, 524308, 0, 65537, 524309, 0, 65537, 655322, 536870915, 1, 655340, 536870915, 1, 655348, 536870915, 0, 589844, 0, 65537, 720866, 536870915, 0, 720893, 536870915, 0, 720894, 536870915, 0, 655379, 0, 65537, 851968, 536870915, 1, 983037, 536870915, 0, 983041, 536870915, 1, 1114110, 536870915, 3, 1114112, 536870915, 1 )
+
+[node name="props" type="TileMap" parent="."]
+modulate = Color( 1, 0.0470588, 0, 1 )
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 16, 16 )
+collision_bounce = 0.9
+collision_layer = 4
+collision_mask = 31
+format = 1
+tile_data = PoolIntArray( -393220, 536870916, 0, -393219, 0, 65536, 983046, 0, 131073, 983047, 0, 131073, 983048, 0, 131073, 983049, 0, 131073, 1048586, 0, 65536, 1114120, 536870916, 0, 1114122, 0, 65536, 1179658, 0, 65536, 1245190, 0, 1, 1245191, 0, 1, 1245192, 0, 1, 1245193, 0, 1, 1245194, 0, 65536 )
+
+[node name="walls" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 16, 16 )
+collision_bounce = 0.9
+collision_layer = 4
+collision_mask = 31
+format = 1
+tile_data = PoolIntArray( 65519, 0, 65538, 65520, 0, 65538, 65521, 0, 65538, 65522, 0, 65538, 65523, 0, 65538, 65524, 0, 65538, 131055, 0, 65538, 131060, 0, 65536, 196591, 0, 65536, 196596, 0, 65536, 262127, 0, 65536, 262132, 0, 65536, 327638, 0, 0, 327639, 0, 1, 327640, 0, 1, 327641, 0, 1, 327642, 0, 1, 327643, 0, 1, 327644, 0, 1, 327645, 0, 1, 327646, 0, 1, 327647, 0, 1, 327648, 0, 1, 327649, 0, 1, 327650, 0, 0, 327651, 0, 0, 327652, 0, 0, 327653, 0, 0, 327654, 0, 0, 327655, 0, 0, 327656, 0, 0, 327657, 0, 0, 327658, 0, 0, 327659, 0, 0, 327660, 0, 0, 327661, 0, 0, 327662, 0, 0, 327663, 0, 0, 327668, 0, 65536, 327669, 0, 65536, 327670, 0, 65536, 327671, 0, 65536, 327672, 0, 65536, 327673, 0, 65536, 327674, 0, 65536, 327675, 0, 65536, 327676, 0, 65536, 327677, 0, 65536, 327678, 0, 65536, 327679, 0, 65536, 262144, 0, 65536, 262145, 0, 65536, 262146, 0, 65536, 262147, 0, 65536, 262148, 0, 65536, 262149, 0, 65536, 262150, 0, 65536, 262151, 0, 65536, 262152, 0, 65536, 262153, 0, 65536, 262154, 0, 65536, 393174, 0, 65536, 393186, 0, 0, 393197, 0, 65536, 327690, 0, 65536, 458710, 0, 65536, 458722, 0, 0, 393226, 0, 65536, 524246, 0, 65536, 524258, 0, 0, 524269, 0, 65536, 458762, 0, 65536, 589782, 0, 0, 589783, 0, 0, 589784, 0, 0, 589785, 0, 0, 589786, 0, 0, 589787, 0, 0, 589788, 0, 0, 589789, 0, 0, 589790, 0, 65536, 589791, 0, 65536, 589793, 0, 65536, 589794, 0, 0, 589805, 0, 65536, 524298, 0, 65536, 655325, 0, 0, 655330, 0, 0, 655335, 0, 0, 655336, 0, 0, 655337, 0, 0, 655338, 0, 0, 655339, 0, 0, 655340, 0, 0, 655341, 0, 0, 655342, 0, 0, 655343, 0, 65536, 655344, 0, 65536, 655345, 0, 65536, 655346, 0, 65536, 655347, 0, 65536, 655348, 0, 65536, 655350, 0, 65536, 655351, 0, 65536, 655352, 0, 65536, 655353, 0, 65536, 655354, 0, 65536, 655355, 0, 65536, 655356, 0, 65536, 655357, 0, 65536, 655358, 0, 65538, 655359, 0, 65538, 589824, 0, 65538, 589825, 0, 65538, 589826, 0, 65538, 589827, 0, 65536, 589828, 0, 65536, 589829, 0, 65536, 589830, 0, 65536, 589831, 0, 65536, 589832, 0, 65536, 589833, 0, 65536, 589834, 0, 65536, 720861, 0, 0, 720866, 0, 65536, 720871, 0, 0, 720883, 0, 65536, 720887, 0, 65536, 786397, 0, 0, 786402, 0, 65536, 786403, 0, 65536, 786405, 0, 65536, 786406, 0, 65536, 786407, 0, 0, 786419, 0, 65536, 786423, 0, 65536, 851933, 0, 0, 851943, 0, 0, 851955, 0, 65536, 851959, 0, 65536, 917469, 0, 0, 917479, 0, 0, 917491, 0, 65536, 917495, 0, 65536, 983005, 0, 0, 983015, 0, 0, 983027, 0, 65536, 983031, 0, 65536, 1048541, 0, 0, 1048542, 0, 0, 1048543, 0, 0, 1048544, 0, 0, 1048545, 0, 0, 1048546, 0, 0, 1048547, 0, 0, 1048548, 0, 0, 1048549, 0, 0, 1048550, 0, 0, 1048551, 0, 0, 1048563, 0, 65536, 1048567, 0, 65536, 1048568, 0, 65536, 1048569, 0, 65536, 1048570, 0, 65536, 1048571, 0, 65536, 1048572, 0, 65536, 1048573, 0, 65536, 1048574, 0, 65536, 1048575, 0, 1, 983040, 0, 1, 983041, 0, 1, 983042, 0, 1, 983043, 0, 1, 983044, 0, 1, 983045, 0, 1, 983046, 0, 1, 983047, 0, 1, 983048, 0, 1, 983049, 0, 1, 983050, 0, 1, 1114099, 0, 65536, 1114110, 0, 65536, 1179635, 0, 65536, 1245171, 0, 65536, 1245182, 0, 65536, 1310707, 0, 65536, 1310718, 0, 65536, 1376243, 0, 65536, 1376244, 0, 65536, 1376245, 0, 65536, 1376246, 0, 65536, 1376247, 0, 65536, 1376248, 0, 65536, 1376249, 0, 65536, 1376250, 0, 65536, 1376251, 0, 65536, 1376252, 0, 65536, 1376253, 0, 65536, 1376254, 0, 65536, 1376255, 0, 1, 1310720, 0, 1, 1310721, 0, 1, 1310722, 0, 1, 1310723, 0, 1, 1310724, 0, 1, 1310725, 0, 1, 1310726, 0, 1, 1310727, 0, 1, 1310728, 0, 1, 1310729, 0, 1, 1310730, 0, 1 )
+
+[node name="walls2" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 16, 16 )
+collision_bounce = 0.9
+collision_layer = 4
+collision_mask = 31
+format = 1
+
+[node name="breakable_walls" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 16, 16 )
+collision_mask = 31
+format = 1
+
+[node name="doors" type="TileMap" parent="."]
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 8
+collision_mask = 27
+format = 1
+tile_data = PoolIntArray( 327664, 0, 0, 327665, 0, 0, 327666, 0, 0, 327667, 0, 0, 458733, 0, 0, 1179646, 0, 0 )
+
+[node name="ghost_doors" type="TileMap" parent="."]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 32
+collision_mask = 29
+format = 1
+tile_data = PoolIntArray( 655349, 0, 1 )
+
+[node name="explosions_instances" type="Node2D" parent="."]
+
+[node name="Ghost" parent="." instance=ExtResource( 1 )]
+position = Vector2( -619.802, 110.115 )
+collision_layer = 4
+collision_mask = 17
+
+[node name="Human" parent="." instance=ExtResource( 4 )]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+position = Vector2( -227.582, 49.6904 )
+rotation = 0.0021113
+
+[node name="Human2" parent="." instance=ExtResource( 4 )]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+position = Vector2( 127.31, 112.192 )
+rotation = 0.0021113
+
+[node name="Label" type="Label" parent="."]
+margin_left = -675.363
+margin_top = 22.8661
+margin_right = -484.363
+margin_bottom = 70.8661
+text = "Move with arrows
+or WASD"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = -9.04849
+margin_top = 39.4258
+margin_right = 190.952
+margin_bottom = 55.4258
+text = "Possess an enemy with E"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = -219.541
+margin_top = 346.185
+margin_right = -19.5411
+margin_bottom = 362.185
+text = "Exit possesed with Q"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="."]
+margin_left = -10.4853
+margin_top = 213.998
+margin_right = 189.515
+margin_bottom = 229.998
+text = "Reach end of level"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndOfLevel" parent="." instance=ExtResource( 7 )]
+position = Vector2( 135.879, 281.336 )
