@@ -11,6 +11,9 @@ var possessedEnemy
 onready var ghost = $Ghost
 
 func _ready():
+	AlertManager.reset()
+	LightManager.reset()
+	
 	$MakeDark.show()
 	
 	var enemies = get_tree().get_nodes_in_group('enemies')
@@ -62,18 +65,18 @@ func _on_Enemy_died(cause, enemy_position, enemyInstanceId):
 	$explosions_instances.add_child(explosion)
 	Audioplayer.play('splash')
 	
-	$Lights.removeLightForEnemyInstanceId(enemyInstanceId)
+	LightManager.removeForEnemyInstanceId(enemyInstanceId)
 	
-	$Lights.addLight(explosion, 'blood')
+	LightManager.addLightToTarget(explosion, 'blood')
 
 func _on_Enemy_start_searching(enemy):
-	$Alerts.addMarkToTarget(enemy, 'question')
+	AlertManager.addMarkToTarget(enemy, 'question')
 
 func _on_Enemy_stop_searching(enemy):
-	$Alerts.removeMarkForEnemyInstanceId(enemy.get_instance_id())
+	AlertManager.removeForEnemyInstanceId(enemy.get_instance_id())
 	
 func _on_Enemy_alerted(enemy):
-	$Alerts.addMarkToTarget(enemy, 'alert')
+	AlertManager.addMarkToTarget(enemy, 'alert')
 
 func _on_Player_hit():
 	game_over()
@@ -92,7 +95,7 @@ func _unhandled_input(event):
 				
 func start_possessing(enemy):
 	ghost.possess_start(enemy.position)
-	$Lights.addLight(enemy, 'enemy')
+	LightManager.addLight(enemy, 'enemy')
 	
 	yield(get_tree().create_timer(0.3), 'timeout')
 	
