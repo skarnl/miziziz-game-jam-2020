@@ -170,10 +170,9 @@ stream = ExtResource( 4 )
 bus = "SFX"
 
 [node name="PlayerDetectionArea2D" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea2D"]
 shape = SubResource( 6 )
 
 [node name="DetectionTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.3
