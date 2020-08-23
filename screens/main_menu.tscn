@@ -200,22 +200,21 @@ playback_speed = 1.65
 anims/loop = SubResource( 3 )
 
 [node name="Ghost" type="Sprite" parent="."]
-position = Vector2( 104.005, 239.102 )
+position = Vector2( 26.4069, 232.515 )
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 416, 96, 16, 16 )
 
 [node name="Question" type="Sprite" parent="."]
 visible = false
-position = Vector2( 256.856, 216.457 )
+position = Vector2( 253.258, 217.591 )
 texture = ExtResource( 4 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 592, 208, 16, 16 )
 
 [node name="Slash" type="Sprite" parent="."]
-visible = false
-modulate = Color( 1, 0, 0, 0.234637 )
+modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 233, 164 )
 texture = ExtResource( 4 )
 centered = false
@@ -223,8 +222,10 @@ region_enabled = true
 region_rect = Rect2( 432, 176, 16, 16 )
 
 [node name="Human" type="Sprite" parent="."]
+visible = false
 modulate = Color( 0.0588235, 0.780392, 1, 1 )
-position = Vector2( 378.043, 239.102 )
+position = Vector2( 264.169, 177.305 )
+rotation = 3.84531
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 448, 16, 16, 16 )
