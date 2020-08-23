@@ -20,7 +20,7 @@ enum GameState {
 
 const BASE_LEVELS_PATH = 'res://game/'
 var current_level = -1
-var levels = ['game.tscn', 'etage_2.tscn', 'etage_3.tscn']
+var levels = ['tutorial.tscn', 'game.tscn', 'etage_2.tscn', 'etage_3.tscn', 'etage_4.tscn']
 
 var _current_state: int = GameState.SPLASH setget _set_current_state
 var _previous_state: int
