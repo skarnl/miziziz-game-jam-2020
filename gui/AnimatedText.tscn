@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/fonts/default_pixel_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://gui/animated_text.gd" type="Script" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=4]
+light_mode = 1
+
+[sub_resource type="Animation" id=5]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
+
+[node name="AnimatedText" type="Label"]
+material = SubResource( 4 )
+margin_left = -669.929
+margin_top = 33.7059
+margin_right = -478.929
+margin_bottom = 70.7059
+custom_fonts/font = ExtResource( 1 )
+text = "Move with arrows
+or WASD"
+align = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/show = SubResource( 5 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 44.9915, 68.612 )
+shape = SubResource( 3 )

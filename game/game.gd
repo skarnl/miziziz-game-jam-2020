@@ -13,6 +13,7 @@ onready var ghost = $Ghost
 func _ready():
 	AlertManager.reset()
 	LightManager.reset()
+	$guard_doors.hide()
 	
 	$MakeDark.show()
 	
@@ -42,9 +43,13 @@ func handle_state_change(new_state):
 	match(current_state):
 		GHOST:
 			$walls.set_collision_bounce(0.9)
+			$guard_doors.hide()
+			$ghost_doors.show()
 #
 		POSSESSED:
 			$walls.set_collision_bounce(0)
+			$guard_doors.show()
+			$ghost_doors.hide()
 #			
 		
 func _on_Enemy_possessed(enemy):
@@ -89,7 +94,7 @@ func _process(delta):
 
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed('exit_possess') and current_state == POSSESSED:
+		if event.is_action_pressed('possess') and current_state == POSSESSED:
 			stop_possessing()
 
 				
