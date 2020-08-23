@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Miziziziz Game Jam"
-run/main_scene="res://game/game.tscn"
+run/main_scene="res://screens/main_menu.tscn"
 
 [autoload]
 

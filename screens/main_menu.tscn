@@ -1,6 +1,141 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://screens/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Early GameBoy.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/alagard.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/images/monochrome_transparent_packed.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "loop"
+length = 20.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Human:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6.49, 9, 11.4, 11.8, 13.1, 14.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 520.643, 239.102 ), Vector2( 250.488, 239.102 ), Vector2( 250.488, 239.102 ), Vector2( 64, 239.102 ), Vector2( 82, 220 ), Vector2( 169.172, 121.906 ), Vector2( 238, 171 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Ghost:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.01, 6.78, 7.63, 11.7, 17.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -22.2541, 239.102 ), Vector2( 199.252, 239.102 ), Vector2( 168.947, 239.102 ), Vector2( 250.488, 239.102 ), Vector2( 79, 223 ), Vector2( -10, 239.102 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Question:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 6.01, 7.63 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Question:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 6.1, 6.5, 7.6, 9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 258, 216.096 ), Vector2( 242, 216.48 ), Vector2( 242, 216.48 ), Vector2( 250.688, 218.401 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Ghost:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 7.58, 11.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Human:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 7.5, 7.6, 7.7, 7.8, 7.9, 8, 8.1, 8.2, 11.8, 13.1, 14.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -3.8, 3.8, -3.8, 3.8, -3.8, 3.8, 0.0, 0.0, -307.2, 242.8 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Human:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 14.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Slash:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 14.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Slash:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 14.6, 17.8, 20 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Ghost:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 6.8, 7.6, 11.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 30.2, 0.0 ]
+}
 
 [node name="MainMenu" type="Control"]
 pause_mode = 2
@@ -14,19 +149,27 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.419608, 0.596078, 0.929412, 0.407843 )
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="ColorRect"]
-margin_left = 85.0
-margin_top = 93.0
-margin_right = 413.0
-margin_bottom = 117.0
-text = "GHOST SPEL DING"
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -190.0
+margin_top = -81.7538
+margin_right = 190.0
+margin_bottom = -21.7538
+custom_fonts/font = SubResource( 1 )
+text = "Bloody Castle"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="Button" parent="."]
 anchor_left = 0.5
@@ -37,8 +180,52 @@ margin_left = -50.0
 margin_top = 12.0
 margin_right = 48.0
 margin_bottom = 56.0
-text = "START"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="Button"]
+margin_left = 11.9034
+margin_top = 10.8683
+margin_right = 91.9034
+margin_bottom = 30.8683
+custom_fonts/font = SubResource( 2 )
+text = "start"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "loop"
+playback_speed = 1.65
+anims/loop = SubResource( 3 )
+
+[node name="Ghost" type="Sprite" parent="."]
+position = Vector2( 104.005, 239.102 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 416, 96, 16, 16 )
+
+[node name="Question" type="Sprite" parent="."]
+visible = false
+position = Vector2( 256.856, 216.457 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 592, 208, 16, 16 )
+
+[node name="Slash" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 0, 0, 0.234637 )
+position = Vector2( 233, 164 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 432, 176, 16, 16 )
+
+[node name="Human" type="Sprite" parent="."]
+modulate = Color( 0.0588235, 0.780392, 1, 1 )
+position = Vector2( 378.043, 239.102 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 448, 16, 16, 16 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
