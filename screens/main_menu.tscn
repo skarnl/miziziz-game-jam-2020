@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://screens/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Early GameBoy.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/alagard.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/images/monochrome_transparent_packed.png" type="Texture" id=4]
+[ext_resource path="res://gui/hud.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -229,4 +230,6 @@ rotation = 3.84531
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 448, 16, 16, 16 )
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
