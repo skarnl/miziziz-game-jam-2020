@@ -35,7 +35,7 @@ collision_bounce = 0.9
 collision_layer = 4
 collision_mask = 31
 format = 1
-tile_data = PoolIntArray( 524316, 536870916, 0, 524317, 0, 65536 )
+tile_data = PoolIntArray( 524249, 536870916, 0, 524316, 536870916, 0, 524317, 0, 65536 )
 
 [node name="walls" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )
@@ -77,10 +77,19 @@ collision_mask = 29
 format = 1
 tile_data = PoolIntArray( 524295, 0, 1 )
 
+[node name="guard_doors" type="TileMap" parent="."]
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 32
+collision_mask = 29
+format = 1
+tile_data = PoolIntArray( 524295, 536870912, 4 )
+
 [node name="explosions_instances" type="Node2D" parent="."]
 
 [node name="Ghost" parent="." instance=ExtResource( 1 )]
-position = Vector2( -619.802, 110.115 )
+position = Vector2( -599, 120 )
 collision_layer = 4
 collision_mask = 17
 

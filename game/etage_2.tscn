@@ -81,6 +81,16 @@ collision_mask = 29
 format = 1
 tile_data = PoolIntArray( 458713, 0, 1, 524270, 0, 1, 524295, 0, 1, 851985, 0, 3 )
 
+[node name="guard_doors" type="TileMap" parent="."]
+visible = false
+modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 32
+collision_mask = 29
+format = 1
+tile_data = PoolIntArray( 458713, 536870912, 4, 524270, 536870912, 4, 524295, 536870912, 4, 851985, 536870912, 4 )
+
 [node name="explosions_instances" type="Node2D" parent="."]
 
 [node name="Ghost" parent="." instance=ExtResource( 1 )]
@@ -148,18 +158,6 @@ rotation = 0.0021113
 modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
 position = Vector2( 254.984, -150.556 )
 rotation = 0.0021113
-
-[node name="Label" type="Label" parent="."]
-margin_left = 161.579
-margin_top = -34.6063
-margin_right = 352.579
-margin_bottom = 13.3937
-text = "Move with WASD
-Possess with E
-Exit possess with Q"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="EndOfLevel" parent="." instance=ExtResource( 7 )]
 position = Vector2( -582.825, 120.605 )

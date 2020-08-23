@@ -13,6 +13,7 @@ onready var ghost = $Ghost
 func _ready():
 	AlertManager.reset()
 	LightManager.reset()
+	$ghost_doors.show()
 	$guard_doors.hide()
 	
 	$MakeDark.show()
