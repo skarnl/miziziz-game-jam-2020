@@ -144,11 +144,6 @@ modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
 position = Vector2( 98.4383, 97.0563 )
 rotation = 0.0021113
 
-[node name="Human13" parent="." instance=ExtResource( 4 )]
-modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
-position = Vector2( 356.347, 136.362 )
-rotation = 0.0021113
-
 [node name="Human9" parent="." instance=ExtResource( 4 )]
 modulate = Color( 0.113725, 0.827451, 0.921569, 1 )
 position = Vector2( 254.984, -150.556 )
