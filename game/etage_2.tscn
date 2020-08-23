@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entities/ghost/ghost.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://entities/enemies/human/human.tscn" type="PackedScene" id=4]
 [ext_resource path="res://walls.tres" type="TileSet" id=5]
 [ext_resource path="res://doors.tres" type="TileSet" id=6]
-[ext_resource path="res://game/lights.gd" type="Script" id=9]
 
 [node name="Game" type="Node2D"]
 position = Vector2( 143.539, 14.7675 )
@@ -161,6 +160,3 @@ Exit possess with Q"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Lights" type="Node2D" parent="."]
-script = ExtResource( 9 )
