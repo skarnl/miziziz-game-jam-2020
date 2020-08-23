@@ -9,7 +9,7 @@
 [ext_resource path="res://game/lights.gd" type="Script" id=9]
 
 [node name="Game" type="Node2D"]
-position = Vector2( 143.539, 15.7675 )
+position = Vector2( 143.539, 14.7675 )
 script = ExtResource( 2 )
 
 [node name="MakeDark" type="CanvasModulate" parent="."]
