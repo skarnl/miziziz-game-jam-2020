@@ -87,15 +87,14 @@ func handle_state_change(next_state):
 			
 		POSSESSED:
 			$AnimationPlayer.play('possessed')
-			set_mode(RigidBody2D.MODE_CHARACTER)
+			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 			
 #			set_process(true)
 			set_process_unhandled_input(true)
 			
-			disconnect('body_entered', self, '_on_body_entered')
 		
 		WAS_POSSESSED:
-			set_mode(RigidBody2D.MODE_RIGID)
+			set_deferred('mode', RigidBody2D.MODE_RIGID)
 		
 			yield(get_tree(), 'idle_frame')
 			
@@ -111,11 +110,11 @@ func handle_state_change(next_state):
 		
 		SEARCHING:
 			start_detection_countdown()
-			set_mode(RigidBody2D.MODE_CHARACTER)
+			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 		
 		ALERTED:
 			emit_signal('alerted')
-			set_mode(RigidBody2D.MODE_CHARACTER)
+			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 	
 func _on_Player_nearby(body):
 	if body.is_in_group('player') and current_state in [NORMAL, SEARCHING, WAS_POSSESSED]:
@@ -161,9 +160,7 @@ func look_around():
 
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
-		if event.is_action_pressed('attack'):
-			emit_signal('hit')
-		elif event.is_action_pressed('possess') and current_state != POSSESSED:
+		if event.is_action_pressed('possess') and current_state != POSSESSED:
 			emit_signal('possessed')
 
 
@@ -209,7 +206,8 @@ func _integrate_forces(state):
 			change_state_to(SEARCHING)
 
 func _on_body_entered(otherBody):
-	print("_on_body_entered", otherBody.name)
+	if current_state != WAS_POSSESSED:
+		return
 	
 	if otherBody.name == 'walls' or otherBody.name == 'doors':
 		play_bounce_sound()
