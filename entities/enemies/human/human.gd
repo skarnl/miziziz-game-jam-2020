@@ -18,7 +18,7 @@ var current_state = NORMAL
 var previous_input
 var playerRef
 
-var bounces = 0
+var bounces = 2
 
 func _ready():
 	$hint.hide()
