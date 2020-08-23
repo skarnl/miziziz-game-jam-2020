@@ -26,6 +26,7 @@ func _ready():
 		enemy.connect('searching', self, '_on_Enemy_start_searching', [enemy])
 		enemy.connect('stop_searching', self, '_on_Enemy_stop_searching', [enemy])
 		enemy.connect('alerted', self, '_on_Enemy_alerted', [enemy])
+		enemy.connect('stop_alerted', self, '_on_Enemy_stop_alerted', [enemy])
 		
 func change_state_to(new_state):
 	match(current_state):
@@ -83,6 +84,9 @@ func _on_Enemy_stop_searching(enemy):
 	
 func _on_Enemy_alerted(enemy):
 	AlertManager.addMarkToTarget(enemy, 'alert')
+	
+func _on_Enemy_stop_alerted(enemy):
+	AlertManager.removeForEnemyInstanceId(enemy.get_instance_id())
 
 func _on_Player_hit():
 	game_over()

@@ -5,6 +5,7 @@ signal died
 signal searching
 signal stop_searching
 signal alerted
+signal stop_alerted
 
 var velocity: Vector2 = Vector2.ZERO
 var MAX_SPEED = 110
@@ -19,6 +20,9 @@ var previous_input
 var playerRef
 
 var bounces = 2
+
+var last_known_position
+
 
 func _ready():
 	$hint.hide()
@@ -39,16 +43,12 @@ func init_player_detection():
 	$DetectionTimer.connect('timeout', self, '_on_DetectionTimer_timeout')
 
 
-func _physics_process(delta):
-	aim()
-	update()
-
 var laser_color = Color(1.0, .329, .298)
 
 func _draw():
-	if hit_pos:
-		draw_circle((hit_pos - position), 4, laser_color)
-		draw_line(Vector2(), (hit_pos - position), laser_color)
+	if last_known_position and OS.is_debug_build():
+		draw_circle((last_known_position - position), 3, laser_color)
+		draw_line(Vector2(), (last_known_position - position), laser_color)
 
 
 func change_state_to(next_state):
@@ -73,6 +73,10 @@ func change_state_to(next_state):
 				emit_signal('stop_searching')
 				handle_state_change(next_state)
 				
+		ALERTED:
+			if next_state in [SEARCHING]:
+				emit_signal('stop_alerted')
+				handle_state_change(next_state)
 	
 func handle_state_change(next_state):
 	current_state = next_state
@@ -106,13 +110,12 @@ func handle_state_change(next_state):
 			connect('body_entered', self, '_on_body_entered')
 		
 		SEARCHING:
-			start_detection()
+			start_detection_countdown()
+			set_mode(RigidBody2D.MODE_CHARACTER)
 		
 		ALERTED:
 			emit_signal('alerted')
 			set_mode(RigidBody2D.MODE_CHARACTER)
-			
-#			set_process(true)
 	
 func _on_Player_nearby(body):
 	if body.is_in_group('player') and current_state in [NORMAL, SEARCHING, WAS_POSSESSED]:
@@ -128,35 +131,33 @@ func _on_Player_away(body):
 		set_process_unhandled_input(false)
 
 func _on_Player_detected(body):
-	if body.is_in_group('player'):
+	if body.is_in_group('player') and current_state in [NORMAL]:
 		change_state_to(SEARCHING)
 
-func start_detection():
+func start_detection_countdown():
 	emit_signal('searching')
 	$DetectionTimer.start()
 	
+func _on_DetectionTimer_timeout():
+	var result = look_around()
 	
-var hit_pos
+	if result:
+		change_state_to(ALERTED)
+	else:
+		change_state_to(NORMAL)
 
-func aim():
+func look_around():
 	if position.distance_to(playerRef.position) > 100:
 		return
 		
 	var space_state = get_world_2d().direct_space_state
 	var result = space_state.intersect_ray(position, playerRef.position, [self])
 	
-	if result:
-		hit_pos = result.position
-	
-	return result
-
-func _on_DetectionTimer_timeout():
-	var result = aim()
-	
 	if result and result.collider.name == 'Ghost':
-		change_state_to(ALERTED)
-	else:
-		change_state_to(NORMAL)
+		last_known_position = result.position
+		return true
+	
+	return false
 
 func _unhandled_input(event):
 	if player_nearby and event is InputEventKey:
@@ -197,10 +198,15 @@ func _integrate_forces(state):
 		
 		state.set_linear_velocity(velocity)
 	elif current_state == ALERTED:
-		var motion = (playerRef.get_global_position() - self.global_position)
-		state.set_linear_velocity(motion.normalized() * 30)
+		look_around()
+		update()
 		
-		# TODO check distance? or line of sight?
+		if last_known_position.distance_to(self.global_position) > 0.5:
+			var motion = (last_known_position - self.global_position)
+			state.set_linear_velocity(motion.normalized() * 30)
+		else:
+			state.set_linear_velocity(Vector2.ZERO)
+			change_state_to(SEARCHING)
 
 func _on_body_entered(otherBody):
 	print("_on_body_entered", otherBody.name)
