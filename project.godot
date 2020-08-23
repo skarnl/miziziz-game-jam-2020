@@ -29,6 +29,8 @@ SceneLoader="*res://global/scene_loader.gd"
 Game="*res://global/game.gd"
 BackgroundMusic="*res://global/background-music.tscn"
 Audioplayer="*res://global/audioplayer.tscn"
+LightManager="*res://global/object_managers/LightManager.tscn"
+AlertManager="*res://global/object_managers/AlertManager.tscn"
 
 [display]
 
