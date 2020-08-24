@@ -11,10 +11,14 @@ var possessedEnemy
 onready var ghost = $Ghost
 
 func _ready():
+	Game.connect('victory', self, 'victory')
+	get_tree().paused = false
+	
 	AlertManager.reset()
 	LightManager.reset()
 	$ghost_doors.show()
 	$guard_doors.hide()
+	$HUD/GameOver.hide()
 	
 	$MakeDark.show()
 	
@@ -128,4 +132,9 @@ func stop_possessing():
 
 	
 func game_over():
-	Game.game_over()
+	$HUD/GameOver.show()
+	get_tree().paused = true
+
+func victory():
+	$HUD/Victory.show_victory()
+	get_tree().paused = true

@@ -2,6 +2,7 @@
 
 extends Node
 
+signal victory
 
 var Screens = {
 	MAIN_MENU = 'res://screens/main_menu.tscn',
@@ -43,8 +44,7 @@ func goto_next_level():
 		# TODO: some kind of screen transition / animation
 		SceneLoader.goto_scene(BASE_LEVELS_PATH + levels[current_level])
 	else:
-		print("GEWONNEN! VICTORIOUS! JEEEEEJ!")
-		# TODO: winstate triggeren
+		emit_signal('victory')
 	
 	
 func game_over():
