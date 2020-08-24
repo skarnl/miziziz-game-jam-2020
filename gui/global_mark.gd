@@ -9,4 +9,4 @@ func _process(delta):
 	if !target:
 		return
 		
-	position = target.position - Vector2(0, 10)
+	position = target.position - Vector2(0, 20)
