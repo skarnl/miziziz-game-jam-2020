@@ -105,6 +105,8 @@ func handle_state_change(next_state):
 			
 			apply_impulse(Vector2.ZERO, previous_input * 10)
 			
+			$screamAudioPlayer.play()
+			
 #			set_process(false)
 			set_process_unhandled_input(false)
 			
