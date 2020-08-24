@@ -6,6 +6,7 @@ signal searching
 signal stop_searching
 signal alerted
 signal stop_alerted
+signal player_hit
 
 var velocity: Vector2 = Vector2.ZERO
 var MAX_SPEED = 110
@@ -75,6 +76,7 @@ func change_state_to(next_state):
 				
 		ALERTED:
 			if next_state in [SEARCHING]:
+				$PlayerHitArea2D.disconnect('body_entered', self, '_on_Player_hit')
 				emit_signal('stop_alerted')
 				handle_state_change(next_state)
 	
@@ -115,6 +117,8 @@ func handle_state_change(next_state):
 		ALERTED:
 			emit_signal('alerted')
 			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
+			
+			$PlayerHitArea2D.connect('body_entered', self, '_on_Player_hit')
 	
 func _on_Player_nearby(body):
 	if body.is_in_group('player') and current_state in [NORMAL, SEARCHING, WAS_POSSESSED]:
@@ -132,6 +136,10 @@ func _on_Player_away(body):
 func _on_Player_detected(body):
 	if body.is_in_group('player') and current_state in [NORMAL]:
 		change_state_to(SEARCHING)
+
+func _on_Player_hit(body):
+	if body.is_in_group('player') and current_state in [ALERTED]:
+		emit_signal('player_hit')
 
 func start_detection_countdown():
 	emit_signal('searching')
@@ -208,7 +216,7 @@ func _integrate_forces(state):
 func _on_body_entered(otherBody):
 	if current_state != WAS_POSSESSED:
 		return
-	
+			
 	if otherBody.name == 'walls' or otherBody.name == 'doors':
 		play_bounce_sound()
 		
@@ -219,7 +227,7 @@ func _on_body_entered(otherBody):
 	# TODO check the velocity of me - if it was fast enough, then we will explode
 	elif otherBody.is_in_group('enemies'):
 		otherBody.explode()
-		explode()	
+		explode()
 
 func play_bounce_sound():
 	randomize()

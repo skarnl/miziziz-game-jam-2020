@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/images/monochrome_transparent.png" type="Texture" id=1]
 [ext_resource path="res://entities/enemies/human/human.gd" type="Script" id=2]
@@ -60,6 +60,9 @@ radius = 27.0185
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 52.0
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 6.08276
 
 [node name="Human" type="RigidBody2D" groups=[
 "enemies",
@@ -173,6 +176,15 @@ bus = "SFX"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea2D"]
 shape = SubResource( 6 )
+
+[node name="PlayerHitArea2D" type="Area2D" parent="."]
+input_pickable = false
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitArea2D"]
+position = Vector2( 0, -2 )
+shape = SubResource( 7 )
 
 [node name="DetectionTimer" type="Timer" parent="."]
 wait_time = 1.3

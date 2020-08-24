@@ -27,6 +27,7 @@ func _ready():
 		enemy.connect('stop_searching', self, '_on_Enemy_stop_searching', [enemy])
 		enemy.connect('alerted', self, '_on_Enemy_alerted', [enemy])
 		enemy.connect('stop_alerted', self, '_on_Enemy_stop_alerted', [enemy])
+		enemy.connect('player_hit', self, '_on_Player_hit')
 		
 func change_state_to(new_state):
 	match(current_state):
