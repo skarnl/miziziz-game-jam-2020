@@ -11,6 +11,7 @@ func _ready():
 	
 	$AnimationPlayer.play('move')
 	$possessedAudioPlayer.play()
+	$moveAudioPlayer.play()
 	
 func _process(delta):
 	var input_vector = Vector2.ZERO
@@ -26,9 +27,12 @@ func _process(delta):
 		
 		if possessed:
 			$possessedAudioPlayer.set_volume_db(0)
+		else:
+			$moveAudioPlayer.set_volume_db(0)
 	else:
 		velocity = Vector2.ZERO
 		$possessedAudioPlayer.set_volume_db(-80)
+		$moveAudioPlayer.set_volume_db(-80)
 	
 	move_and_slide(velocity)
 	
