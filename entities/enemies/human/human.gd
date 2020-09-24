@@ -17,6 +17,15 @@ var player_nearby = false
 enum { NORMAL, POSSESSED, WAS_POSSESSED, SEARCHING, ALERTED }
 var current_state = NORMAL
 
+var valid_state_changed = {
+	NORMAL: [POSSESSED, SEARCHING],
+	POSSESSED: [WAS_POSSESSED],
+	WAS_POSSESSED: [POSSESSED],
+	SEARCHING: [NORMAL, ALERTED, POSSESSED],
+	ALERTED: [SEARCHING]
+}
+
+
 var previous_input
 var playerRef
 
@@ -56,30 +65,23 @@ func change_state_to(next_state):
 	
 	print('change_state_to: ', next_state)
 	
+	if !can_change_state(next_state):
+		return
+	
+	# handle previous state
 	match(current_state):
-		NORMAL:
-			if next_state in [POSSESSED, SEARCHING]:
-				handle_state_change(next_state)
-			
-		POSSESSED:
-			if next_state in [WAS_POSSESSED]:
-				handle_state_change(next_state)
-
-		WAS_POSSESSED:
-			if next_state in [POSSESSED]:
-				handle_state_change(next_state)
-		
 		SEARCHING:
-			if next_state in [NORMAL, ALERTED, POSSESSED]:
-				emit_signal('stop_searching')
-				handle_state_change(next_state)
+			emit_signal('stop_searching')
 				
 		ALERTED:
-			if next_state in [SEARCHING]:
-				$PlayerHitArea2D.disconnect('body_entered', self, '_on_Player_hit')
-				emit_signal('stop_alerted')
-				handle_state_change(next_state)
+			$PlayerHitArea2D.disconnect('body_entered', self, '_on_Player_hit')
+			emit_signal('stop_alerted')
 	
+	handle_state_change(next_state)
+
+func can_change_state(next_state):
+	return next_state in valid_state_changed[current_state]
+
 func handle_state_change(next_state):
 	current_state = next_state
 	
@@ -89,6 +91,7 @@ func handle_state_change(next_state):
 			
 		POSSESSED:
 			$AnimationPlayer.play('possessed')
+			disconnect('body_entered', self, '_on_body_entered')
 			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 			
 #			set_process(true)
@@ -110,10 +113,11 @@ func handle_state_change(next_state):
 #			set_process(false)
 			set_process_unhandled_input(false)
 			
-			connect('body_entered', self, '_on_body_entered')
+			call_deferred('set_body_entered_listener')
 		
 		SEARCHING:
 			start_detection_countdown()
+			disconnect('body_entered', self, '_on_body_entered')
 			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 		
 		ALERTED:
@@ -121,7 +125,10 @@ func handle_state_change(next_state):
 			set_deferred('mode', RigidBody2D.MODE_CHARACTER)
 			
 			$PlayerHitArea2D.connect('body_entered', self, '_on_Player_hit')
-	
+
+func set_body_entered_listener():
+	connect('body_entered', self, '_on_body_entered')
+
 func _on_Player_nearby(body):
 	if body.is_in_group('player') and current_state in [NORMAL, SEARCHING, WAS_POSSESSED]:
 		$hint.show()
