@@ -74,7 +74,7 @@ func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed('restart'):
 			#hack so we restart the current level ^^
-			current_level -= 1
+			current_level = clamp(current_level - 1, -1, levels.size())
 			
 			transition_to(GameState.GAME)
 		elif event.is_action_pressed('pause'):
